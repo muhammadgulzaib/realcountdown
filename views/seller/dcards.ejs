@@ -1,0 +1,198 @@
+<%- include('../partials/seller/header') %>
+<%- include('../partials/seller/navbar') %>
+
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <%- include('../partials/seller/head') %>
+        <!-- End of Topbar -->
+
+        <!-- Countdown by Zubair Azam -->
+
+<div class="container-fluid">
+<div class="row pt-2">
+    <div class="col-md-12">
+    <div class="text-center">
+<div class="container">
+
+</div>
+</div>
+</div> </div>
+</div>
+
+        <div class="container-fluid">
+<div class="row pt-2">
+    <div class="col-md-12">
+    <div class="text-center">
+                                <img style="width: 150px;" src="/images/BIDDER.png" alt="" />
+                            </div>
+                            <div class="text-center pt-3">
+                                <img style="width: 150px" src="/images/Count_BatVersion.png" alt="" />
+                            </div>
+                            <div class=" d-flex justify-content-center pt-2">
+                            <div id="countdown" class="d-flex">
+
+
+                            <%
+                            day = 0
+                            hour = 0
+                            minute = 0
+                            second = 0
+                                        const date = new Date();
+
+                                        let ct = new Date(countdownOver);
+                                        console.log(typeof countdownOver)
+                                        const dateTime = ct.getTime() - date.getTime()
+                                        if(dateTime > 0){
+                                        const diff = dateTime / (1000 * 3600 * 24)
+
+
+                                        let c = diff * 24
+
+                                        seconds = Number(c) * 3600;
+                                         day = Math.floor(seconds / (3600*24));
+                                         hour = Math.floor(seconds % (3600*24) / 3600);
+                                         minute = Math.floor(seconds % 3600 / 60);
+                                         second = Math.floor(seconds % 60);
+                                    }
+
+                                        %>
+
+
+
+
+
+
+
+        <div id="gettingValuesExample" style="display:flex">
+           <div class="container-time" style="display: flex; flex-direction: column; background-color: black; color: white; padding: 1rem; margin:1rem; text-align:center; border-radius: 5px">
+            <span id="day"><%= day %></span>
+            <span> DAYS</span>
+        </div>
+        <div class="container-time" style="display: flex; flex-direction: column; background-color: black; color: white; padding: 1rem; margin:1rem; text-align:center; border-radius: 5px">
+        <span id="hour"><%= hour %></span><span> HOURS</span>
+    </div>
+        <div class="container-time" style="display: flex; flex-direction: column; background-color: black; color: white; padding: 1rem; margin:1rem; text-align:center; border-radius: 5px">
+            <span id="minute"><%= minute %></span><span> MINUTES</span>
+        </div>
+        <div class="container-time" style="display: flex; flex-direction: column; background-color: black; color: white; padding: 1rem; margin:1rem; text-align:center; border-radius: 5px">
+            <span id="second"><%= second %></span><span> SECONDS</span>
+        </div>
+        </div>
+
+
+
+  </div>
+
+
+                            </div>
+                            <div class="container-fluid">
+
+    <% if(countdown == '' || over == true){ %>
+                                <div class="row">
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"></div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <marquee behavior="" direction=""  scrollamount="10"  onmouseover="this.stop();"  onmouseout="this.start();">
+
+<div class="m-2 d-flex" >
+    <form action="/seller/countdown?id=<%= property %>" method="POST">
+    <button name="timeCountdown" value="12 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">12Hours</button>
+    <button name="timeCountdown" value="24 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">24Hours</button>
+    <button name="timeCountdown" value="36 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">36Hours</button>
+    <button name="timeCountdown" value="48 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">48Hours</button>
+    <button name="timeCountdown" value="60 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">60Hours</button>
+    <button name="timeCountdown" value="72 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">72Hours</button>
+    <button name="timeCountdown" value="84 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">84Hours</button>
+    <button name="timeCountdown" value="96 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">96Hours</button>
+    <button name="timeCountdown" value="108 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">108Hours</button>
+    <button name="timeCountdown" value="120 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">120Hours</button>
+    <button name="timeCountdown" value="132 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">132Hours</button>
+    <button name="timeCountdown" value="144 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">144Hours</button>
+    <button name="timeCountdown" value="156 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">156Hours</button>
+    <button name="timeCountdown" value="168 Hours" class="m-2" style="background-color: black;padding: 8px; font-size: 20px;color: white; border-radius: 10px;">168Hours</button>
+    </form>
+</div>
+</marquee>
+
+</div>
+<div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"></div>
+
+                                </div>
+
+                            </div>
+
+        <div class="text-center pt-3">
+            <p>countdown lenght 1 day to 1 week</p>
+        </div>
+        <div class="text-center">
+
+<!-- Button trigger modal -->
+<% } %>
+<!-- data-toggle="modal" data-target="#exampleModalCenter" -->
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <% if(over == true || typeof countdownOver == 'undefined') {%>
+<a href="/seller/start-countdown?id=<%= property %>" class="btn btn-primary" >
+        Start COUNTDOWN
+    </a>
+    <% }  %>
+
+</div>
+<!-- Modal -->
+<div style="padding-left: 270px;" class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="pt-4">
+            <img style="width: 70px;" src="/images/LeaningCount.png" alt="">
+        </div>
+   <div>
+   <h5 class="p-3">
+    Coundown started successfully the bids of this property will be shown on dashboard under this property tab
+</h5>
+   </div>
+
+    </div>
+  </div>
+</div>
+
+
+            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-md">Start COUNTDOWN</button>
+
+<div class="modal fade bd-example-modal-md"   tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="pt-4">
+            <img style="width: 70px;" src="/images/LeaningCount.png" alt="">
+        </div>
+   <div>
+   <p class="p-3">
+    Coundown started successfully the bids of this property will be shown on dashboard under this property tab
+    </p>
+   </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/seller/scripts') %>
+    <script src="/js/seller/countdown.js"></script>
+    <%- include('../partials/seller/footer') %>
+</div>
+
+

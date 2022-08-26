@@ -1,0 +1,161 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+         <%- include('../partials/head') %>
+
+        <div class="container-fluid">
+
+
+<!-- DataTales Example -->
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add New Message</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/agent/promotional-message" method="POST">
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text" name="message"></textarea>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Send message</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="text-center">
+                        <th>Check</th>
+                        <th>ID</th>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% proMessages.forEach((message, index) => { %>
+                    <tr class="text-center">
+                        <td><input type="checkbox"></td>
+                        <td><%= index+1 %></td>
+                        <td><%= message?.key || 'Null' %></td>
+                        <td><%= message.message %></td>
+                        <td>  &nbsp;
+                            <input class="btn btn-primary" type="submit" value="Edit">
+                            <input class="btn btn-primary" type="submit" value="View">
+                            <input class="btn btn-danger" type="reset" value="Delete">
+                            <input class="btn btn-primary" data-toggle="modal" data-target="#modalBuyer-<%= message?._id %>" type="submit"  value="Send to Buyer">
+                            <input class="btn btn-primary" type="submit" data-toggle="modal" data-target="#modalSeller-<%= message?._id %>" value="Send to Seller">
+                        </td>
+
+                    </tr>
+                    <%  }) %>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+
+
+
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+<!-- popup -->
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<%  proMessages.forEach((message, index) => {  %>
+<div class="modal fade" id="modalSeller-<%= message?._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Instructions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iure, non animi voluptates vel nam repellat maiores alias quidem, nostrum ab officiis. Culpa, provident nihil.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
+       <!-- <a href="/agent/payment-seller/<%= message?._id %>"> <button type="button" class="btn btn-primary">Accept</button></a> -->
+       <a href="/agent/seller-listing/<%= message?._id %>"> <button type="button" class="btn btn-primary">Accept</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+<% }) %>
+
+
+<%  proMessages.forEach((message, index) => {  %>
+<div class="modal fade" id="modalBuyer-<%= message?._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Instructions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt iure, non animi voluptates vel nam repellat maiores alias quidem, nostrum ab officiis. Culpa, provident nihil.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject</button>
+       <!-- <a href="/agent/payment-buyer/<%= message?._id %>"> <button type="button" class="btn btn-primary">Accept</button></a> -->
+       <a href="/agent/buyer-listing/<%= message?._id %>"> <button type="button" class="btn btn-primary">Accept</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+<% }) %>
+<%- include('../partials/footer') %>
+
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<%- include('../partials/scripts') %>
+
+
+

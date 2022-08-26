@@ -1,0 +1,191 @@
+<%- include('../partials/seller/header') %>
+<%- include('../partials/seller/navbar') %>
+
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <%- include('../partials/seller/head') %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+
+        <div class="cantainer-fluid">
+        <div class="text-center"><h2>Saved Property</h2></div>
+   <div class="row pt-2">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <% if(props) {%>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th>Property Name</th>
+                    <th>Actions</th>
+                    <th>CountDown</th>
+                </tr>
+                <% props.forEach(property=>{ %>
+                <tr>
+                <th scope="col" class="text-center"><%= property.propertyName %></th>
+                <th scope="col" >
+                    <!-- Button trigger modal -->
+                    <button type="button" class="w-25  btn-primary" data-toggle="modal" data-target="#exampleModal-<%= property.propertyName %>">
+                    Edit
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal-<%= property.propertyName %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <div class="container fluid">
+                        <form action="/seller/edit-property" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="inputPassword4">Property Name</label>
+                                <input type="text" class="form-control" name="propertyName" id="inputname" placeholder="Property Name" value="<%= property.propertyName %>">
+                                </div>
+                                <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail4"  placeholder="Email" readonly required value="<%= email ? email : '' %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Property Address</label>
+                                <input type="text" class="form-control" id="inputAddress" name="propertyAddress" placeholder="1234 Main St" value="<%= property.propertyAddress ? property.propertyAddress : '' %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress2">Mailing Address</label>
+                                <input type="text" class="form-control" id="inputAddress2" name="mailingAddress"  placeholder="Apartment, studio, or floor" value="<%= property.mailingAddress ? property.mailingAddress : '' %>">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="inputCity">Phone</label>
+                                <input type="text" class="form-control" id="inputphone" name="phone" value="<%= property.phone ? property.phone : '' %>">
+                                </div>
+                                <div class="form-group col-md-6 ">
+                                <label for="inputZip">Zip Code</label>
+                                <input type="text" class="form-control" id="inputZip" name="zipCode" value="<%= property.zipCode ? property.zipCode : '' %>">
+                                </div>
+                            </div>
+
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" name="property_id" value="<%= property._id ? property._id : '' %>">Save </button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+                &nbsp; &nbsp;
+                <button type="button" class="w-25 btn-primary" data-toggle="modal" data-target="#exampleModal-<%= property.propertyName %>">
+                    View
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal-<%= property.propertyName %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <div class="container fluid">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="inputPassword4">Property Name</label>
+                                <input type="text" class="form-control"  id="inputname" placeholder="Property Name" value="<%= property.propertyName %>">
+                                </div>
+                                <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail4"  placeholder="Email" readonly required value="<%= email ? email : '' %>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Property Address</label>
+                                <input type="text" class="form-control" id="inputAddress"  placeholder="1234 Main St" value="<%= property.propertyAddress ? property.propertyAddress : '' %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress2">Mailing Address</label>
+                                <input type="text" class="form-control" id="inputAddress2" 0  placeholder="Apartment, studio, or floor" value="<%= property.mailingAddress ? property.mailingAddress : '' %>">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="inputCity">Phone</label>
+                                <input type="text" class="form-control" id="inputphone" value="<%= property.phone ? property.phone : '' %>">
+                                </div>
+                                <div class="form-group col-md-6 ">
+                                <label for="inputZip">Zip Code</label>
+                                <input type="text" class="form-control" id="inputZip"  value="<%= property.zipCode ? property.zipCode : '' %>">
+                                </div>
+                            </div>
+
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Close </button>
+                        </div>
+                </form>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </th>
+
+
+        <th scope="col" class="text-center">
+            <% if(!property.completed){ %>
+            <a href="/seller/countdown?id=<%= property._id %>" class="btn btn-primary btn-sm">
+
+                    Start CountDown
+
+            </a>
+            <% }else{ %>
+                <button type="button" class="btn btn-secondary btn-sm" <%= 'disabled' %> >Deal Done!</button>
+            <% } %>
+        </th>
+
+    </tr>
+                <% }) %>
+            </thead>
+        </table>
+        <% } else { %>
+            <p>Hello World</p>
+        <% } %>
+    </div>
+<div class="col-md-1"></div>
+</div>
+</div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/seller/scripts') %>
+    <%- include('../partials/seller/footer') %>
+
+
+
+

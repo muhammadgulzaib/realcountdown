@@ -1,0 +1,193 @@
+
+
+
+
+
+<%-
+ include('../partials/seller/header')
+ %>
+ <%- include('../partials/seller/navbar') %>
+
+
+
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+         <%- include("../partials/seller/head") %>
+        <!-- End of Topbar -->
+<div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+          <div class="text-center">
+             <% if(bids.length > 0) {  %>
+             <ul class="nav nav-pills mb-3 text-center" id="pills-tab" role="tablist">
+
+               <% bids.forEach((property, index)=> {%>
+                  <li class="nav-item mx-2">
+                     <a class="nav-link" id="pills-home-tab-<%= index %>" data-toggle="pill" href="#pills-home-<%= index %>" role="tab" aria-controls="pills-home" aria-selected="true">Property <%= index+1 %></a>
+                   </li>
+               <% }) %>
+            </ul>
+      <!-- Tab panes -->
+            <div class="tab-content" id="myTabContent">
+               <% bids.forEach((bid, index)=> {%>
+
+                  <div class="tab-pane fade" id="pills-home-<%= index %>" role="tabpanel" aria-labelledby="pills-home-tab-<%= index %>"> <div class="row" id="myDIV">
+
+                     <% bid.userId.properties.forEach(property => { %>
+
+                        <% if(property._id.equals(bid.bidOnProperty)){ %>
+
+
+                     <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                           <div class="card-body">
+                              <div class="row no-gutters align-items-center">
+                                 <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                       Name
+                                    </div>
+=                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.agentId.name %></div>
+                                    <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                       Commession
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.commision %>%</div>
+                                    <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                       Rating
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">***</div>
+                                 </div>
+                                 <div class="col-auto">
+                                    <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                                 </div>
+                                 <!-- Button trigger modal -->
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#waiting-<%= bid._id %>">
+                                 Details
+                                 </button>
+                                 <!-- Modal -->
+                                 <div class="modal fade" id="waiting-<%= bid._id %>" tabindex="-1" role="dialog" aria-labelledby="waitingmodaldetails" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                             <span aria-hidden="true">&times;</span>
+                                             </button>
+                                          </div>
+                                          <div class="modal-body">
+                                             <div class="text-center pt-2">
+                                                <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="<%= bid.profilePicture ? bid.profilePicture : '/img/undraw_profile.svg' %>" alt="">
+                                             </div>
+                                             <div class="text-center pt-2">
+                                                <h3><%= bid.agentId.name %> would like to Bid for your busniess at <%= bid.commision %>%</h3>
+                                             </div>
+                                             <div class="text-center pt-2">
+                                                <h3 style="color: yellow;">***</h3>
+                                             </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                             
+                                            <form action="/seller/accept-bid/<%= bid.agentId?._id %>/<%= bid.bidOnProperty %>" >
+                                             <input class="btn btn-primary" type="submit" value="Accept">
+                                          </form>
+
+                                          <form action="/seller/reject-bid/<%= bid.agentId._id %>/<%= bid.bidOnProperty %>" >
+                                             <input class="btn btn-danger" type="submit" value="Reject">
+                                          </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <% } %>
+
+                     <% }) %>
+
+
+
+
+
+
+
+
+
+
+                  </div>
+
+               </div>
+
+
+               <% }) %>
+
+          </div>
+          <% }else{ %>
+            <div class="alert alert-info" role="alert">
+               <h4 class="alert-heading">No Waiting Bids</h4>
+               <p>There are no current waiting bids. Check the status of your bids in Bids In Progress Section</p>
+             </div>
+            <% } %>
+          </div>
+      </div>
+ </div>
+
+
+
+
+
+
+
+<!-- property A  -->
+
+
+
+
+
+
+
+<!-- property B -->
+
+
+
+ </div>
+ </div>
+ </div>
+</div>
+
+
+
+        <!-- /.container-fluid -->
+
+
+
+
+    <!-- End of Main Content -->
+    <%- include('../partials/seller/footer') %>
+
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+<%- include('../partials/seller/scripts') %>
+
+<script src="/js/seller/indexPage.js">
+    // document.getElementById("myDIV").style.display="none";
+
+
+
+
+
+
+</script>
+
+
+
+

@@ -1,0 +1,467 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+         <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div  style="padding-left: 270px;" class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div id="hide"  class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="pt-4 text-center">
+            <img style="width: 70px;" src="./images/LeaningCount.png" alt="">
+        </div>
+   <div>
+   <h5 class="p-3" >
+       <div >
+Please enter Bid commession
+            <input type="text"  class="form-control" id="bit" placeholder="Bid Commession" name="number">
+    <br>            <div class="text-right"> <button onclick="myFunction(document.getElementById('bit').value)" type="button" class="btn btn-primary">
+Ok
+</button></div>
+       </div>
+</h5>
+   </div>
+
+    </div>
+  </div>
+</div>
+        <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h1>Buyer Countdown</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid " style="background-color: cadetblue;">
+  <form id="filtersearch"action="/agent/buyer-countdown" class=" d-inline"method="post">
+  <div class="row">
+     <div class="col-md-1"></div>
+     <div class="col-md-4 m-2">
+        <div class="input-group">
+           <input type="text" name="zipCode" class="form-control bg-light border-0 small" placeholder="Search for zip code" aria-label="Search" aria-describedby="basic-addon2">
+           <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+              </button>
+           </div>
+        </div>
+     </div>
+     <div class="col-md-3 m-2">
+        <div class="input-group">
+           <input type="text" name="Name" class="form-control bg-light border-0 small" placeholder="Search by Name" aria-label="Search" aria-describedby="basic-addon2">
+           <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+              </button>
+           </div>
+        </div>
+     </div>
+     <div class="col-md-2 m-2">
+        <div class="input-group">
+          <div class="input-group-append">
+              <button class="btn btn-primary" type="submit"  onclick="resetForm();">
+              Reset Filter
+              </button>
+           </div>
+        </div>
+    </div>
+  </div>
+</form>
+<script>
+  function resetForm() {
+    document.getElementById("filtersearch").reset();
+ }
+ </script>
+</div>
+<div class="container-fluid mx-auto card ">
+    <% properties.forEach(property => { %>
+     <form action="/agent/bid/<%= property.property._id %>/<%= property.user._id %>" method="POST">
+      <div class="row  <%if(JSON.stringify(hover_id)===JSON.stringify(property.user._id)){%>
+       
+       <%}%> w-100"
+       <% if(JSON.stringify(hover_id)===JSON.stringify(property.user._id)) {%>
+        style="border:2px solid red;"
+       <%}%> >
+      <div class="card-deck">
+      <div class="card-body">
+      <h5 class="text-success">Card title</h5>
+      <p class="card-text"><%= property.user.name %></p>
+      </div>
+
+      <div class="card-body">
+      <h5 class="text-success">Bid</h5>
+      <p class="card-text" id="demo"></p>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter-1">
+  Commission Rate
+  </button>
+      </div>
+      <div class="card-body">
+      <h5 class="text-success">Zip Code</h5>
+      <p class="card-text"><%= property.user.zipCode %></p>
+
+
+      </div>
+
+      <div class="card-body">
+      <img class="card-img-top" style="width: 100px;" src="/images/Count_BatVersion.png" alt="Card image cap">
+      <div class=" d-flex pt-2">
+                  <div id="countdown" class="d-flex">
+                      <%
+                      day = 0
+                      hour = 0
+                      minute = 0
+                      second = 0
+                                  const date = new Date();
+
+                                  let ct = new Date(property.property.countdownOverAt);
+
+                                  const dateTime = ct.getTime() - date.getTime()
+                                  if(dateTime > 0){
+                                  diff = dateTime / (1000 * 3600 * 24)
+
+
+                                  let c = diff * 24
+
+                                  seconds = Number(c) * 3600;
+                                   day = Math.floor(seconds / (3600*24));
+                                   hour = Math.floor(seconds % (3600*24) / 3600);
+                                   minute = Math.floor(seconds % 3600 / 60);
+                                   second = Math.floor(seconds % 60);
+                              }
+
+                                  %>
+                              <input type="hidden" name="" id="date" value="<%= property.property.countdownOverAt %>">
+                      <div class="m-2">
+                          <span id="days" style="background-color: black;padding: 4px; font-size: 20px;color: white; border-radius: 10px;"><%= day %></span>
+                          <p class="pt-2 text-center text-danger">Days</p>
+                      </div>
+                      <div class="m-2">
+                          <span id="hours" style="background-color: black;padding: 4px; font-size: 20px;color: white; border-radius: 10px;"><%= hour %></span>
+                          <p class="pt-2 text-center text-danger">Hours</p>
+                      </div>
+                      <div class="m-2">
+                          <span id="minutes" style="background-color: black;padding: 4px; font-size: 20px;color: white; border-radius: 10px;"><%= minute %></span>
+                          <p class="pt-2 text-center text-danger">Min</p>
+                      </div>
+                      <div class="m-2">
+                          <span id="seconds"style="background-color: black;padding: 4px; font-size: 20px;color: white; border-radius: 10px;"><%= second %></span>
+                          <p class="pt-2 text-center text-danger">Sec</p>
+                      </div>
+                  </div>
+              </div>
+      </div>
+      <div class="" style="padding-left: 170px;">
+      <div class="">
+          <div>
+          <img class="card-img-top" style="width: 100px;" src="/images/Count_BatVersion.png" alt="Card image cap">
+
+          </div>
+
+          <a href="/agent/details/<%= property.property._id %>">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="">
+                      Detail
+                      </button>
+                    </a>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal-<%= property.property._id %>" >Bid Now</button>
+
+
+
+
+  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">Open modal for @fat</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button> -->
+
+  <div class="modal fade" id="exampleModal-<%= property.property._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+
+          <div class="">
+              <label for="recipient-name" class="col-form-label">Screen Name</label>
+              <input type="text" name="screenName" class="form-control"  value="<%= screenName ? screenName : ''%>" >
+          </div>
+          <div class="mb-3 mt-3">
+              <div class="text-center">
+                  <button
+                    type="button"
+                    class="btn btn-outline-info"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter-image-1"
+                  >
+                    Choose Profile
+                  </button>
+                </div>
+
+                <div style="display:flex; justify-content: center; align-items: center;" >
+                <img src="" id="image-profile" alt="" class="mt-3">
+                <input type="hidden" id="image-src" name="profilePicture" value="">
+              </div>
+
+          </div>
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Send message</button>
+      </div>
+
+      </div>
+  </div>
+  </div>
+
+
+      </div>
+       </div>
+      </div>
+      </div>
+      <div
+      style="padding-left: 270px"
+      class="modal fade"
+      id="exampleModalCenter-image-1"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div id="hide-image" class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5>
+            Select profile
+          </h5>
+                <button type="button" class="close" data-dismiss="modal-image" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
+          <div class="modal-body">
+    
+              <div>
+    
+                <div id="textbox" >
+                  <img src="/images/prfile1.jpg" class="" alt="" />&nbsp;
+                  <img src="/images/profile.jpg" class="" alt="" />&nbsp;
+                  <img src="/images/profile2.jpg" class="" alt="" />&nbsp;
+                  <img src="/images/profile4.jpg" class="" alt="" />&nbsp;
+                  <img src="/images/profile5.jpg" class="" alt="" />&nbsp;
+                  <img src="/images/profile6.jpg" class="" alt="" />&nbsp;
+                </div>
+                <br /><br />
+                <div class="text-right">
+                  <button
+    
+                    type="button"
+                    class="btn btn-secondary"
+                    id="close-image"
+                    data-dismiss="modal"
+                  >
+                    Ok
+                  </button>
+    
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="modal fade" id="exampleModalview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+      
+                <div class="modal-body">
+                    <div class="container fluid">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Property Name</label>
+                                <input type="text" class="form-control" id="inputname" placeholder="Property Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddress">Property Address</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddress2">Mailing Address</label>
+                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">Phone</label>
+                                <input type="text" class="form-control" id="inputphone" name="number">
+                            </div>
+                            <div class="form-group col-md-6 ">
+                                <label for="inputZip">Zip Code</label>
+                                <input type="text" class="form-control" id="inputZip">
+                            </div>
+                        </div>
+      
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save </button>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div  style="padding-left: 270px;" class="modal fade " id="exampleModalCenter-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+          <div id="hide"  class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Your Commission Rate</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              <div class="pt-4 text-center">
+                    <img style="width: 70px;" src="/images/LeaningCount.png" alt="">
+                </div>
+           <div>
+           <h5 class="p-3" >
+               <div >
+    
+                      Your commission
+                    <input type="text"  class="form-control" id="bit" placeholder="Bid Commission" name="commision" value="<%= commision ? commision : '' %>">
+                    <input type="hidden" name="id" value="<%= id %>">
+            <br>            <div class="text-right"> <button id="bid-button" type="button" class="btn btn-primary" data-dismiss="modal">
+           Ok
+        </button>
+      </div>
+               </div>
+        </h5>
+           </div>
+    
+            </div>
+    
+          </div>
+        </div>
+      </form>
+      <% })%>
+  </div>
+<div class="col-md-1"></div>
+</div>
+</div>
+
+
+
+
+
+
+
+</div>
+</div>
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+</div>
+<!-- End of Page Wrapper -->
+<%- include('../partials/footer') %>
+<%- include('../partials/scripts') %>
+<script src="/js/agent/countdown.js">
+
+</script>
+
+
+<style>
+    img {
+      width: 147px;
+    }
+
+    .highlighted {
+      border: 2px solid #b404ae;
+      background-image: url("/images/Green_tick.png");
+    }
+
+    .imageset {
+      border-radius: 50%;
+      width: 50px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196f3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196f3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 25px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>

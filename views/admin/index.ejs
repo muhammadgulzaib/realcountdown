@@ -1,0 +1,866 @@
+  <%- include("../partials/admin/header") %>
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <%- include("../partials/admin/navbar") %>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <%- include("../partials/admin/top-nav") %>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid bg">
+            <!-- Page Heading -->
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+              <a
+                href="#"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                ><i class="fas fa-download fa-sm text-white-50"></i> Generate
+                Report</a
+              >
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+              <!-- Earnings (Monthly) Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                          style="font-size: 15px"
+                        >
+                          Successful Bids
+                        </div>
+                        <div
+                          class="h5 mb-0 font-weight-bold text-gray-800 text-center"
+                        >
+                         <%= successfullBidsCount ? successfullBidsCount : 0 %>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Earnings (Monthly) Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                          style="font-size: 15px"
+                        >
+                          Bids In Progress
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                         <%= bidsInProgress ? bidsInProgress : 0 %>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Earnings (Monthly) Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                          style="font-size: 15px"
+                        >
+                          Agents
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                            <div
+                              class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
+                            >
+                              <%= locals.count ? count : "0" %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pending Requests Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                          style="font-size: 15px"
+                        >
+                          Pending Requests
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          8
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Row -->
+
+            <div class="row d-flex justify-content-center">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary text-center">
+                    Review Requests
+                  </h6>
+                </div>
+                <div class="card-body">
+
+                  <div class="table-responsive">
+                    <table
+                      class="table table-bordered"
+                      id="dataTable"
+                      width="100%"
+                      cellspacing="0"
+                    >
+                      <thead>
+                        <tr>
+
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>State</th>
+                          <th>Zip Code</th>
+                          <th>Status</th>
+                          <th class="text-center">Actions</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+
+
+                          <% allAgents?.forEach(function(agent, index) { %>
+
+                            <tr>
+
+                            <td><%=  index + 1 %></td>
+                            <td><%= agent.name ? agent.name : "null" %></td>
+                            <td><%= agent.email ? agent.email : "null" %></td>
+                            <td><%= agent.role ? agent.role.toUpperCase() : "null" %></td>
+                            <td><%= agent.state ? agent.state : "null" %></td>
+                            <td><%= agent.zipCode ? agent.zipCode : "null" %></td>
+                            <td><%= agent.status ? agent.status : "null" %></td>
+
+                            <td>
+                              <a
+                                name="delete"
+                                class="btn btn-danger"
+                                type="reset"
+                                value="Delete"
+                                href="/admin/delete-role/<%= agent._id %>/1"
+                              >Delete</a>
+                              &nbsp;
+                              <input
+                              data-toggle="modal"
+                              data-target="#agent-<%= agent._id %>"
+                              data-whatever="@mdo"
+                              class="btn btn-info"
+                              type="submit"
+                              value="View"
+                            />&nbsp;
+
+                            <% if(agent.status !== "approved") {%>
+                              <a
+                                class="btn btn-primary"
+
+                                href="/admin/approve-role/<%= agent._id %>/1"
+                                value="Approve"
+                              >Approve</a>
+                            <% }else{ %>
+                              <button type="button" class="btn btn-secondary" disabled>Approved</button>
+                            <%  } %>
+                            </td>
+                            </tr>
+
+                          <% }) %>
+
+                          <% allSellers?.forEach((seller, index) => { %>
+
+                            <tr>
+
+                            <td><%=  index + 1 %></td>
+                            <td><%= seller?.name %></td>
+                            <td><%= seller?.email %></td>
+                            <td><%= seller?.role %></td>
+                            <td><%= seller?.state %></td>
+                            <td><%= seller?.zipCode  %></td>
+                            <td><%= seller?.status %></td>
+
+                            <td>
+                              <a
+                                name="delete"
+                                class="btn btn-danger"
+                                type="reset"
+                                value="Delete"
+                                href="/admin/delete-role/<%= seller._id %>/2"
+                              >Delete</a>
+                              &nbsp;
+                              <input
+                              data-toggle="modal"
+                              data-target="#seller-<%= seller._id %>"
+                              data-whatever="@mdo"
+                              class="btn btn-info"
+                              type="submit"
+                              value="View"
+                            />&nbsp;
+
+                            <% if(seller.status !== "approved") {%>
+                              <a
+                                class="btn btn-primary"
+
+                                href="/admin/approve-role/<%= seller._id %>/2"
+                                value="Approve"
+                              >Approve</a>
+                            <% }else{ %>
+                              <button type="button" class="btn btn-secondary" disabled>Approved</button>
+                            <%  } %>
+                            </td>
+                            </tr>
+
+                          <% }) %>
+
+
+                          <% allBuyers?.forEach((buyer, index) => { %>
+
+                            <tr>
+
+                            <td><%=  index + 1 %></td>
+                            <td><%= buyer?.name %></td>
+                            <td><%= buyer?.email %></td>
+                            <td><%= buyer?.role %></td>
+                            <td><%= buyer?.state %></td>
+                            <td><%= buyer?.zipCode  %></td>
+                            <td><%= buyer?.status %></td>
+
+                            <td>
+                              <a
+                                name="delete"
+                                class="btn btn-danger"
+                                type="reset"
+                                value="Delete"
+                                href="/admin/delete-role/<%= buyer._id %>/3"
+                              >Delete</a>
+                              &nbsp;
+                              <input
+                              data-toggle="modal"
+                              data-target="#buyer-<%= buyer._id %>"
+                              data-whatever="@mdo"
+                              class="btn btn-info"
+                              type="submit"
+                              value="View"
+                            />&nbsp;
+
+                            <% if(buyer.status !== "approved") {%>
+                              <a
+                                class="btn btn-primary"
+
+                                href="/admin/approve-role/<%= buyer._id %>/3"
+                                value="Approve"
+                              >Approve</a>
+                            <% } else{ %>
+                              <button type="button" class="btn btn-secondary" disabled>Approved</button>
+                            <%  } %>
+                            </td>
+                            </tr>
+
+                          <% }) %>
+
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+              <% allAgents?.forEach(function(agent, index) { %>
+              <div
+              class="modal fade"
+              id="agent-<%= agent._id %>"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Agent Details
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/admin/edit-agent/<%= agent._id  %>" method="POST">
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Full Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.name %>"
+                            value="<%= agent.name %>"
+                            name="name"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Email Address</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.email %>"
+                            value="<%= agent.email %>"
+                            name="email"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Screen Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.screenName %>"
+                            value="<%= agent.screenName %>"
+                            name="screenName"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Profession Category</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.professionalCategory %>"
+                            value="<%= agent.professionalCategory %>"
+                            name="professionalCategory"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Profession Title</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.professionalTitle %>"
+                            value="<%= agent.professionalTitle %>"
+                            name="professionalTitle"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Licinence/Passport/ID</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.license %>"
+                            value="<%= agent.license %>"
+                            name="license"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <label for="">City</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.city %>"
+                            value="<%= agent.city %>"
+                            name="city"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Time Zone</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.timeZone %>"
+                            value="<%= agent.timeZone %>"
+                           name="timeZone"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="formGroupExampleInput"
+                          >Brokrage Address</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="formGroupExampleInput"
+                          placeholder="<%= agent.brokerageAddress %>"
+                            value="<%= agent.brokerageAddress %>"
+                            name="brokerageAddress"
+                        />
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Service Area</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.serviceAreas %>"
+                            value="<%= agent.serviceAreas %>"
+                            name="serviceAreas"
+                            />
+                        </div>
+                        <div class="col">
+                          <label for="">Primary Phone</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.primaryPhone %>"
+                            value="<%= agent.primaryPhone %>"
+                            name="primaryPhone"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Brokrage Phone</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.brokeragePhone %>"
+                            value="<%= agent.brokeragePhone %>"
+                            name="brokeragePhone"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">State</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.state %>"
+                            value="<%= agent.state %>"
+                            name="state"
+                          />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Zip Code</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.zipCode %>"
+                            value="<%= agent.zipCode %>"
+                            name="zipCode"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Description</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= agent.description %>"
+                            value="<%= agent.description %>"
+                            name="description"
+                          />
+                        </div>
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </form>
+                    <a href="/admin/approve-role/<%= agent._id %>/1" class="btn btn-primary">
+                      Approved
+                    </a>
+                    <a href="/admin/disapprove-role/<%= agent._id %>/1" class="btn btn-primary">
+                      DisApproved
+                    </a>
+                  </div>
+                </div>
+              </div>
+              </div>
+            <% }); %>
+
+            <% allSellers?.forEach(function(seller, index) { %>
+              <div
+              class="modal fade"
+              id="seller-<%= seller._id %>"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Seller Details
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/admin/edit-seller/<%=seller._id%>" method="POST">
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Full Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%=seller.name %>"
+                            value="<%=seller.name %>"
+                            name="name"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Email Address</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%=seller.email  %>"
+                            name="email"
+                            value="<%=seller.email %>"
+                    
+                          />
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="">Zip Code</label>
+                          <input
+                            type="tel"
+                            class="form-control form-control-user"
+                            id="zibcode"
+                            name="zipCode"
+                            placeholder="<%=  seller.zipCode %>"
+                            value="<%=  seller.zipCode %>"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Lincense/Passport/ID*</label>
+                          <input
+                            type="tel"
+                            class="form-control form-control-user"
+                            id="passportid"
+                            name="license"
+                            placeholder="<%=  seller.license %>"
+                            value="<%=  seller.license %>"
+                          />
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="formGroupExampleInput"
+                          >Address</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="formGroupExampleInput"
+                          placeholder="<%=  seller.address %>"
+                            value="<%=  seller.address %>"
+                            name="address"
+                        />
+                        </div>
+                     
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="">City</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%=  seller.city %>"
+                            value="<%=  seller.city %>"
+                            name="city"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">State</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%=  seller.state %>"
+                            value="<%=  seller.state %>"
+                            name="state"
+                          />
+                        </div>
+
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="">Phone</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="phone"
+                            placeholder="<%=  seller.phone %>"
+                            value="<%=  seller.phone %>"
+                          
+                          />
+                        </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  
+                    <a href="/admin/approve-role/<%= seller._id %>/2" class="btn btn-primary">
+                      Approved
+                    </a>
+                    <a href="/admin/disapprove-role/<%= seller._id %>/2" class="btn btn-primary">
+                      DisApproved
+                    </a>
+                  </div>
+                </form>
+                </div>
+              </div>
+              </div>
+            <% }) %>
+            <% allBuyers?.forEach(function(buyer, index) { %>
+              <div
+              class="modal fade"
+              id="buyer-<%= buyer._id %>"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      buyer Details
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/admin/edit-buyer/<%= buyer._id%>" method="POST">
+                      <div class="row">
+                        <div class="col">
+                          <label for="">Full Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= buyer.name %>"
+                            value="<%= buyer.name %>"
+                            name="name"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Email Address</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= buyer.email  %>"
+                            name="email"
+                            value="<%= buyer.email %>"
+                    
+                          />
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="">Zip Code</label>
+                          <input
+                            type="tel"
+                            class="form-control form-control-user"
+                            id="zibcode"
+                            name="zipCode"
+                            placeholder="<%= buyer.zipCode %>"
+                            value="<%= buyer.zipCode %>"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">Lincense/Passport/ID*</label>
+                          <input
+                            type="tel"
+                            class="form-control form-control-user"
+                            id="passportid"
+                            name="license"
+                            placeholder="<%= buyer.license %>"
+                            value="<%= buyer.license %>"
+                          />
+                        </div>
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="formGroupExampleInput"
+                          >Address</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="formGroupExampleInput"
+                          placeholder="<%= buyer.address %>"
+                            value="<%= buyer.address %>"
+                            name="address"
+                        />
+                        </div>
+                     
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="">City</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= buyer.city %>"
+                            value="<%= buyer.city %>"
+                            name="city"
+                          />
+                        </div>
+                        <div class="col">
+                          <label for="">State</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="<%= buyer.state %>"
+                            value="<%= buyer.state %>"
+                            name="state"
+                          />
+                        </div>
+
+                      </div>
+                      <div class="row py-1">
+                        <div class="col">
+                          <label for="">Phone</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="phone"
+                            placeholder="<%= buyer.phone %>"
+                            value="<%= buyer.phone %>"
+                          
+                          />
+                        </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </form>
+                    <a href="/admin/approve-role/<%= buyer._id %>/3" class="btn btn-primary">
+                      Approved
+                    </a>
+                    <a href="/admin/disapprove-role/<%= buyer._id %>/3" class="btn btn-primary">
+                      DisApproved
+                    </a>
+                  </div>
+                </div>
+              </div>
+              </div>
+            <% }) %>
+              <!-- Pie Chart -->
+              <!-- <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i> Direct
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Social
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> Referral
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+            </div>
+
+            <!-- Content Row -->
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+       <%- include("../partials/footer") %>
+
+    <!-- Bootstrap core JavaScript-->
+  </body>
+
+  <%- include("../partials/scripts") %>
+  <script src="/js/admin/index.js"></script>
+</html>

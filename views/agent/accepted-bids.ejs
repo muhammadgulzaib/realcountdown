@@ -1,0 +1,130 @@
+<%- include('../partials/header') %> <%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+        <%
+            let i  = 0;
+        %>
+        <!-- Begin Page Content -->
+        <% if(acceptedBids.length > 0){%>
+        <div class="container-fluid">
+
+            <div class="text-center"><h2>Accepted Bid</h2></div>
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <% acceptedBids.forEach((bid, index)=>{ %>
+
+                    <li class="nav-item mx-2">
+                        <a class="nav-link <%= index == 0 ? 'active' : '' %>" id="pills-home-tab-<%= index %>" data-toggle="tab" href="#property-<%= index+1 %>" role="tab" aria-controls="home" aria-selected="true" >Property <%= index + 1 %></a>
+                        <% i = index %>
+
+                    </li>
+                <% }) %>
+              </ul>
+
+              <div class="tab-content" >
+              <% acceptedBids.forEach((bid, index)=>{ %>
+
+                <div class="tab-pane fade <%= index == 0 ? 'active show' : '' %>"" id="property-<%= index+1 %>" role="tabpanel" aria-labelledby="pills-home-tab-<%= index %>">
+
+                    <div class="col-md-12">
+                        <div class="text-center pt-3">
+                            <img
+                                style="width: 150px"
+                                src="/images/StandingCount.png"
+                                alt=""
+                            />
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col-xl-4 col-md-4"></div>
+
+                            <div class="col-xl-4 col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div>
+                                                <h2><%= bid.commision %>%</h2>
+                                            </div>
+                                            <div class="col-auto pl-3">
+                                                <img
+                                                    style="
+                                                        width: 70px;
+                                                        border-radius: 50%;
+                                                        border: 1px solid lightgray;
+                                                    "
+                                                    src="/images/StandingCount.png"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div class="col mr-2 pl-4">
+                                                <div
+                                                    class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                                                >
+                                                    <%= bid.userId.name %>
+                                                </div>
+                                                <div
+                                                    class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1"
+                                                >
+                                                    <%= bid.userId.phone %>
+                                                </div>
+
+
+                                            </div>
+                                            <div>
+                                                <% if (bid.role === 'Seller') { %>
+                                                    <a
+                                                    href="/agent/chat/<%= bid.userId._id %>/1"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary btn-sm"
+                                                    >
+                                                        Chat
+                                                    </button></a
+                                                >
+                                                <% } else if (bid.role === 'Buyer') { %>
+                                                    <a
+                                                    href="/agent/chat/<%= bid.userId._id %>/2"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary btn-sm"
+                                                    >
+                                                        Chat
+                                                    </button></a
+                                                >
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+
+        </div>
+        <% }else{ %>
+
+            <div class="alert alert-info" role="alert">
+               No bids accepted! See for the waiting bids in Bids in Progress
+              </div>
+        <% } %>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/footer') %>
+
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<%- include('../partials/scripts') %>

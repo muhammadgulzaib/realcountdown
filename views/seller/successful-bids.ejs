@@ -1,0 +1,183 @@
+
+<%- include('../partials/seller/header') %>
+<%- include('../partials/seller/navbar') %>
+<style>
+  label {
+    width: 100%;
+}
+
+.card-input-element {
+    display: none;
+}
+
+.card-input {
+    margin: 10px;
+    padding: 0px;
+}
+
+.card-input:hover {
+    cursor: pointer;
+}
+
+.card-input-element:checked + .card-input {
+     box-shadow: 0 0 1px 1px #332ecc;
+}
+</style>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <%- include('../partials/seller/head') %>
+        <!-- End of Topbar -->
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+        <div class="text-center"><h2>Successful Bids</h2></div>
+                    <div class="row pt-2">
+
+
+
+
+
+
+
+
+                      <% bids.forEach(bid => { %>
+                        <div class="col-xl-4 col-md-6 mb-4">
+
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <h3 class="text-center" style="color: rgb(58, 110, 221);">Congratulations</h3>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+
+                                        <div class="col mr-2 ">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Property Name</div>
+
+                                                <% bid.userId.properties.forEach(property => { %>
+                                                    <% if(property._id.equals(bid.bidOnProperty)){ %>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><%= property.propertyName %></div>
+                                                    <% } %>
+                                                <% }) %>
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Name</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid?.agentId?.name %></div>
+                                            <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                                Commession</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.commision %>%</div>
+                                            <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                                Status</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Successful</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <img style="width: 150px;" src="/images/StandingCount.png" alt="">
+                                        </div>
+                                       <div> <a href="#" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#agent-<%= bid?.agentId?._id  %>">Invite</a></div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div
+                        class="modal fade"
+                        id="agent-<%= bid?.agentId?._id  %>"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true"
+                        >
+                        <div id="hide-image" class="modal-dialog modal-dialog-centered" role="document">
+                           <div class="modal-content">
+                            <form action="/seller/invite/<%= bid?.agentId?._id %>" method="post">
+                              <div class="modal-header">
+                                 <h5>
+                                    Select property
+                                 </h5>
+                                 <button type="button" class="close" data-dismiss="modal-image" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                                 </button>
+                              </div>
+                              <div class="modal-body">
+                                <% properitesWithInTimeRange.forEach((property)=>{%>
+                                <div class="row">
+                                  <div class="col-12">
+                                    <label>
+                                      <input type="radio" name="propertyId" value="<%=property.property._id%>" class="card-input-element" />
+                            
+                                        <div class="card card-default card-input">
+                                          <div class="card-body">
+                                            <%= property.property.propertyName%>
+                                          </div>
+                                        </div>
+                            
+                                    </label>
+                                  </div>
+                                </div>
+                                <% }) %>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+
+                      <% }) %>
+
+                    </div>
+                </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+<!-- popup
+ -->
+ <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<% bids.forEach(bid => { %>
+<div class="modal fade" id="seller-<%= bid.userId._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select Property</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <select class="form-control">
+  <option></option>
+  <option>Property A</option>
+  <option>Property B</option>
+  <option>Property C</option>
+
+</select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Invite</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% }) %>
+<!-- End of Main Content -->
+
+<%- include('../partials/seller/scripts') %>
+
+<%- include('../partials/seller/footer') %>
+</div>
+
+
+
+
+
+

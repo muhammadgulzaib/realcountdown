@@ -1,0 +1,136 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+         <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="pills-seller-tab" data-toggle="pill" href="#pills-seller" role="tab" aria-controls="pills-seller" aria-selected="true">Seller</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="pills-buyer-tab" data-toggle="pill" href="#pills-buyer" role="tab" aria-controls="pills-buyer" aria-selected="false">Buyer</a>
+                </li>
+
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-seller" role="tabpanel" aria-labelledby="pills-seller-tab">
+                    <div class="text-center"><h2>Successful Bids</h2></div>
+                    <div class="row pt-2">
+                        <% if(successfulBidsSeller?.length > 0){ %>
+                        <% successfulBidsSeller.forEach(bid => { %>
+                        <div class="col-xl-4 col-md-6 mb-4">
+
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <h3 class="text-center" style="color: rgb(58, 110, 221);">Congratulations</h3>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+
+                                        <div class="col mr-2 ">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Property Name</div>
+
+
+                                                <% bid.userId.properties.forEach(property => { %>
+
+                                                    <% if(property._id.equals(bid.bidOnProperty)){ %>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= property.propertyName %></div>
+                                                    <% } %>
+                                                <% }) %>
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Name</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                                            <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                                Commession</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.commision %>%</div>
+                                            <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                                Status</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Successful</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <img style="width: 150px;" src="/images/StandingCount.png" alt="">
+                                        </div>
+                                       <div> <a href="/agent/invite/<%= bid.userId._id %>/1" class="btn btn-primary btn-lg">Invite</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                        <% } %>
+
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-buyer" role="tabpanel" aria-labelledby="pills-buyer-tab">
+                    <div class="text-center"><h2>Successful Bids</h2></div>
+                    <div class="row pt-2">
+                        <% if(successfulBidsBuyer?.length > 0){ %>
+                        <% successfulBidsBuyer.forEach(bid => { %>
+                        <div class="col-xl-4 col-md-6 mb-4">
+
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <h3 class="text-center" style="color: rgb(58, 110, 221);">Congratulations</h3>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+
+                                        <div class="col mr-2 ">
+
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Name</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                                            <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                                Commession</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.commision %>%</div>
+                                            <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                                Status</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Successful</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <img style="width: 150px;" src="/images/StandingCount.png" alt="">
+                                        </div>
+                                    <div>
+                                        <a href="/agent/invite/<%= bid.userId._id %>/2" class="btn btn-primary btn-lg">Invite</a>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                        <% }else{ %>
+                            <div class="alert alert-info" role="alert">
+                               No successfull bids
+                              </div>
+                        <% } %>
+                    </div>
+                </div>
+              </div>
+
+
+                </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/footer') %>
+
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <%- include('../partials/scripts') %>
+
+
+
+
+

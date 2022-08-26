@@ -1,0 +1,109 @@
+<%- include('../partials/header') %> <%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+        <h1 class="text-center">Charity & Donation</h1>
+        <div class="container">
+            <div class="row">
+            <div class="col-12 col-sm-12 col-md-3"></div>
+
+      <div class="col-12 col-sm-12 col-md-6 ">
+          <div class="card text-center">
+              <div class="card-body">
+                  <div><img class="w-50" src="/images/Count_BatVersion.png" alt=""></div>
+              <h5 class="pt-3">Reak CountDown gives 10% of it's profit to charity</h5>
+              <div class="pt-3">
+
+                <form action="/agent/charity-buyer/<%= messageId %>" method="POST">
+        <select style="padding: 10px; width:300px " class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="charityLocation">
+  <option selected>Please Select Charity Name</option>
+  <option value="Guitars Over Guns">Guitars Over Guns</option>
+  <option value="Make a Wish Foundation">Make a Wish Foundation</option>
+  <option value="A Gift for Teaching">A Gift for Teaching</option>
+  <option value="National Association of the Deaf">National Association of the Deaf</option>
+  <option value="Ronald McDonald House">Ronald McDonald House</option>
+  <option value="National Down Syndrome Congress">National Down Syndrome Congress</option>
+  <option value="National Breast Cancer Coalition">National Breast Cancer Coalition</option>
+
+</select>
+              </div>
+      <br>
+<div class="float-right">
+<button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#exampleModal">Add Name</button>
+
+<button type="submit" class="btn btn-secondary m-2">Donate</button>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Charity Name</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="form-group">
+        <form action="/agent/charity-buyer" method="POST">
+          <input type="text" class="form-control" id="exampleInput1" name="charityLocation" aria-describedby="emailHelp" placeholder="Enter Charity Name">
+        </form>
+  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <a href="/agent/buyer-listing/<%= messageId %>">
+       <button type="button" class="btn btn-primary" data-dismiss="modal">Donate</button>
+       </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div></div>
+<div class="col-12 col-sm-12 col-md-3"></div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+    <!-- End of Main Content -->
+
+    <%- include('../partials/footer') %>
+
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<%- include('../partials/scripts') %>
+
+
+

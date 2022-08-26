@@ -1,0 +1,353 @@
+<%- include("../partials/admin/header") %>
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include("../partials/admin/navbar") %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include("../partials/admin/top-nav") %>
+        <!-- End of Topbar -->
+
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Agent To Buyer
+                </h6>
+              </div>
+              <div class="card-body">
+
+                   
+                    <div class="w-100 d-flex flex-column">
+
+                      <div class="row w-100">
+                        <div class=" col-4  p-2 text-center border border-1">Agent Name(Sender)</div>
+                        <div class=" col-4  p-2 text-center border border-1">Buyer Name (Recevier)</div>
+
+                        <div class=" col-4  p-2 text-center border border-1">Reveiew</div>
+                      </div>
+                      <% messages.forEach((message, index)=> { %>
+                        <% message.msg.forEach(chat => { %>
+                          <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                          <div class='row w-100
+                          <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                            <%=chat.viewMessage?"order-1":" "%>
+                          <%}else{%><%=" "%><%}%>'
+                          
+                          >
+                            <div class=" col-4  p-2 text-center border border-1 "> <%= message.agentName %></div>
+                            <div class="col-4  p-2 text-center border border-1 "> <%= message.sellerName %></div>
+                            <div class="col-4  p-2 text-center border border-1">
+                              <button
+                              type="button"
+                              class='btn <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                                <%=chat.viewMessage?"btn-primary":"btn-danger"%>
+                              <%}else{%><%="btn-primary"%><%}%>'
+                              data-toggle="modal"
+                              id="<%=message.agentId %><%=message.sellerId %>"
+                              data-target="#chat-<%=message.agentId %><%=message.sellerId %>"
+                            
+                            >
+                            <!-- <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                             <%if(!chat.viewMessage){%><a href="/admin/viewmessage-seller/<%=message.sellerId %>/<%=message.agentId %>" class="text-white text-decoration-none" target="_parent"> Review</a>
+                             <%}else{%>
+                              Review
+                              <%}%>
+                            <%}else{%> Review <%}%> -->
+                            Review
+                                
+                             </button>
+ 
+                                 <div
+                                 class="modal fade bd-example-modal-lg"
+                                 tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="myLargeModalLabel"
+                                 aria-hidden="true"
+                                 id="chat-<%=message.agentId %><%=message.sellerId %>"
+                               >
+                                 <div class="modal-dialog modal-lg">
+   
+                                   <div class="modal-content">
+                                       <div class="modal-header">
+   
+                                         <h5 class="modal-title" id="exampleModalLabel">Conversation Between <%= message.agentName %> and <%= message.sellerName %></h5>
+                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                           <span aria-hidden="true">&times;</span>
+                                         </button>
+                                       </div>
+                                     <div class="modal-body">
+                                     
+                                         <% chat.chat.forEach(interaction => { %>
+                                         <% if(interaction.senderId.equals(message.agentId) && chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+    
+                                             <form action="/admin/edit-or-approve-message/<%= interaction._id %>/2" method="POST">
+                                             <div class="row pl-3">
+                                               <div class="col-md-9">
+                                                 <div class="form-group">
+                                                   <label
+                                                     for="message-text"
+                                                     class="col-form-label"
+                                                     >Message:</label
+                                                   >
+   
+                                                     <textarea
+                                                       class="form-control"
+                                                       id="message-text"
+                                                       name="message"
+                                                     ><%= interaction.message %> </textarea
+                                                     >
+                                                   </div>
+   
+   
+                                                 </div>
+                                         <div class="col-md-3 d-flex">
+   
+   
+                                             <input
+                                               class="btn btn-primary m-1"
+                                               style="
+                                                 height: 40px;
+                                                 position: relative;
+                                                 top: 45px;
+                                               "
+                                               type="submit"
+                                               value="Edit"
+                                               name="approve"
+                                             />
+   
+                                             <% if(!interaction.approved){ %>
+                                               <input
+                                                 class="btn btn-primary m-1"
+                                                 style="
+                                                   height: 40px;
+                                                   position: relative;
+                                                   top: 45px;
+                                                 "
+                                                 type="submit"
+                                                 value="Approve"
+                                                 name="approve"
+                                               />
+                                             <% }else{ %>
+                                               <button type="button" class="btn btn-secondary m-1" style="
+                                               height: 40px;
+                                               position: relative;
+                                               top: 45px;
+                                             " disabled>Approved</button>
+                                             <% } %>
+   
+                                         </div>
+                                             </form>
+                                     </div>
+   
+                                       <% } %>
+   
+                                       <% })%>
+   
+                                     <div class="modal-footer">
+                                       <button
+                                         type="button"
+                                         class="btn btn-secondary"
+                                         data-dismiss="modal"
+                                       >
+                                         Close
+                                       </button>
+                                     </div>
+                                   </div> </div>
+                                 </div>
+                               </div>
+  
+                              </div>
+                    </div>
+<%}%>
+                          <% })}) %>
+
+ 
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="container-fluid">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4 mx-0">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Buyer To Agent
+                </h6>
+              </div>
+              <div class="card-body">
+               
+                  <div class="w-100 d-flex flex-column">
+
+                    <div class="row w-100">
+                      <div class=" col-4  p-2 text-center border border-1">Buyer Name(Sender)</div>
+                      <div class=" col-4  p-2 text-center border border-1">Agent Name (Recevier)</div>
+
+                      <div class=" col-4  p-2 text-center border border-1">Reveiew</div>
+                    </div>
+
+            
+              <% messages.forEach((message, index)=> { %>
+                <% message.msg.forEach(chat => { %>
+                     <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                     
+                      <div class='row w-100
+                          <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                            <%=chat.viewMessage?"order-1":" "%>
+                          <%}else{%><%=" "%><%}%>'
+                          
+                          >
+                    <div class="col-4  p-2 text-center border border-1"> <%= message.sellerName %></div>
+                    <div class="col-4  p-2 text-center border border-1"> <%= message.agentName %></div>
+                    <div class="col-4  p-2 text-center border border-1">
+                      <button
+                      type="button"
+                      class='btn <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                        <%=chat.viewMessage?"btn-primary":"btn-danger"%>
+                      <%}else{%><%="btn-primary"%><%}%>'
+                      data-toggle="modal"
+                      id="<%=message.agentId %><%=message.sellerId %>"
+                      data-target="#new-chat-<%=message.agentId %><%=message.sellerId %>"
+                    
+                    >
+                    <!-- <% if(chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+                     <%if(!chat.viewMessage){%><a href="/admin/viewmessage-seller/<%=message.sellerId %>/<%=message.agentId %>" class="text-white text-decoration-none" target="_parent"> Review</a>
+                     <%}else{%>
+                      Review
+                      <%}%>
+                    <%}else{%> Review <%}%> -->
+                    Review
+                        
+                     </button>
+
+                         <div
+                         class="modal fade bd-example-modal-lg"
+                         tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true"
+                         id="new-chat-<%=message.agentId %><%=message.sellerId %>"
+                       >
+                         <div class="modal-dialog modal-lg">
+
+                           <div class="modal-content">
+                               <div class="modal-header">
+
+                                 <h5 class="modal-title" id="exampleModalLabel">Conversation Between <%= message.agentName %> and <%= message.sellerName %></h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                               </div>
+                             <div class="modal-body">
+                             
+                                 <% chat.chat.forEach(interaction => { %>
+                                 <% if(interaction.senderId.equals(message.sellerId) && chat.senderOne.equals(message.sellerId) && chat.senderTwo.equals(message.agentId)){ %>
+
+                                     <form action="/admin/edit-or-approve-message/<%= interaction._id %>/2" method="POST">
+                                     <div class="row pl-3">
+                                       <div class="col-md-9">
+                                         <div class="form-group">
+                                           <label
+                                             for="message-text"
+                                             class="col-form-label"
+                                             >Message:</label
+                                           >
+
+                                             <textarea
+                                               class="form-control"
+                                               id="message-text"
+                                               name="message"
+                                             ><%= interaction.message %> </textarea
+                                             >
+                                           </div>
+
+
+                                         </div>
+                                 <div class="col-md-3 d-flex">
+
+
+                                     <input
+                                       class="btn btn-primary m-1"
+                                       style="
+                                         height: 40px;
+                                         position: relative;
+                                         top: 45px;
+                                       "
+                                       type="submit"
+                                       value="Edit"
+                                       name="approve"
+                                     />
+
+                                     <% if(!interaction.approved){ %>
+                                       <input
+                                         class="btn btn-primary m-1"
+                                         style="
+                                           height: 40px;
+                                           position: relative;
+                                           top: 45px;
+                                         "
+                                         type="submit"
+                                         value="Approve"
+                                         name="approve"
+                                       />
+                                     <% }else{ %>
+                                       <button type="button" class="btn btn-secondary m-1" style="
+                                       height: 40px;
+                                       position: relative;
+                                       top: 45px;
+                                     " disabled>Approved</button>
+                                     <% } %>
+
+                                 </div>
+                                     </form>
+                             </div>
+
+                               <% } %>
+
+                               <% })%>
+
+                             <div class="modal-footer">
+                               <button
+                                 type="button"
+                                 class="btn btn-secondary"
+                                 data-dismiss="modal"
+                               >
+                                 Close
+                               </button>
+                             </div>
+                           </div> </div>
+                         </div>
+                       </div>
+
+                      </div>
+                    </div>
+
+                  <% }})}) %>
+
+              
+           
+          
+            
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+
+        <%- include("../partials/footer") %>
+
+        <!-- Bootstrap core JavaScript-->
+      </body>
+
+      <%- include("../partials/scripts") %>
+    </html>
+

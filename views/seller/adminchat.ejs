@@ -1,0 +1,95 @@
+<%-
+include('../partials/seller/header')
+%>
+<%- include('../partials/seller/navbar') %>
+<div id="content-wrapper" class="d-flex flex-column">
+   <div id="content">
+        <%- include("../partials/seller/head") %>
+<div>
+    <h2 class="text-center" style="color: green;">Chat With Admin</h2>
+</div>
+ <div class="container d-flex justify-content-center">
+    <div class="card card_chat">
+        <div class="d-flex flex-row justify-content-between text-white"> 
+            <i class="fas fa-chevron-left"></i> 
+             <span class="pb-3">Live chat</span>
+              <i class="fas fa-times"></i> 
+        </div>
+                <% if(messages){ %>
+                <% messages.chat.forEach(message => { %>
+               
+                <% if(!message?.senderId.equals(sellerId)){ %>
+                    <div class="d-flex flex-row p-3"> <img src="<%= admin.profilePicture ? admin.profilePicture : '/img/undraw_profile.svg' %>" width="30" height="30">
+                  <div class="chat ml-2 p-3"><%= message?.message %></div>
+               </div>
+               <% }else if(message?.senderId.equals(sellerId)){ %>
+               <div class="d-flex flex-row p-3 flex-right" style="justify-content: end;">
+                  <div class="bg-white mr-2 p-3  text-right"><span class="text-muted" ><%= message?.message %> </span></div> 
+                  <span style="display: flex; align-items: center; justify-content: center;">
+
+                     <img src="<%= image ? image : '/img/undraw_profile.svg' %>" width="30" height="30">
+                  </span>
+               </div>
+               <% }}) %>
+
+            <% } %>
+       <form action="/seller/admin-chat" method="POST">
+            <div class="form-group px-3"> 
+                <textarea class="form-control" name="message" rows="2" placeholder="Type your message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" data-toggle="modal" >
+        </form>
+ Send Message
+</button>
+    </div>
+</div>
+    </div>
+</div>
+    </div>
+<%- include('../partials/seller/footer') %>
+</div>
+<%- include('../partials/seller/scripts') %>
+
+<style>
+
+
+
+.card_chat {
+    width: 800px;
+    border: none;
+    border-radius: 15px
+}
+
+
+
+.chat {
+    border: none;
+    background: #E2FFE8;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+.bg-white {
+    border: 1px solid #E7E7E9;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #F0F0F0;
+    font-size: 20px
+}
+
+.form-control:focus {
+    box-shadow: none
+}
+
+.form-control::placeholder {
+    font-size: 20px;
+    color: #C4C4C4
+}
+</style>
+
+

@@ -1,0 +1,303 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+         <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+<div class="container-fluid">
+   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Seller</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Buyer</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+         <% if(sellersBids.length > 0) {%>
+         <% sellersBids.forEach(bid => { %>
+            <div class="col-xl-4 col-md-6 mb-4" >
+               <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                     <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                           <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                              Buyer Name
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                           <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                              Bid Rate
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.commision %>%</div>
+                           <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                              Zip Code
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.zipCode %></div>
+                        </div>
+                        <div class="col-auto">
+                           <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                        </div>
+                           <div class="w-100 d-flex align-items-end">
+                              <a
+                                class="btn btn-primary btn-sm"
+                                href="/agent/accept-bid/<%=bid.userId._id%>/<%=bid.bidOnProperty%>"
+                                >Accept</a
+                              >
+                              <br /><br />
+                              <a
+                                class="btn btn-danger btn-sm"
+                                href="/agent/reject-bid/<%=bid.userId._id%>/<%=bid.bidOnProperty%>"
+                                >Reject</a
+                              >
+                            </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="details-<%= bid.bidOnProperty %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <div class="text-center pt-2">
+                                       <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="/images/StandingCount.png" alt="">
+                                    </div>
+                                    <div class="text-center pt-2">
+                                       <h3>Waqar would like to Bid for your busniess at 2.3%</h3>
+                                    </div>
+                                    <div class="text-center pt-2">
+                                       <h3 style="color: yellow;">9807</h3>
+                                    </div>
+                                 </div>
+                                 <div class="modal-footer">
+                                    <input class="btn btn-primary" type="submit" value="Accept">
+                                    <input class="btn btn-primary" type="submit" value="Waiting">
+                                    <input class="btn btn-danger" type="reset" value="Reject">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+             </div>
+         <% }) %>
+         <% }else{ %>
+            <div class="alert alert-info" role="alert">
+               No accepted bids. Please wait and check later
+             </div>
+
+         <% } %>
+      </div>
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+         <% if(buyerBids.length > 0) {%>
+         <% buyerBids.forEach(bid => { %>
+            <div class="col-xl-4 col-md-6 mb-4" >
+               <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                     <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                           <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                              Buyer Name
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                           <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                              Bid Rate
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.commision %>%</div>
+                           <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                              Zip Code
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.zipCode %></div>
+                        </div>
+                        <div class="col-auto">
+                           <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                        </div>
+                        <div class="w-100 d-flex align-items-end">
+                           <a
+                             class="btn btn-primary btn-sm"
+                             href="/agent/accept-buyer-bid/<%=bid.userId._id%>/<%=bid.bidOnProperty%>"
+                             >Accept</a
+                           >
+                           <br /><br />
+                           <a
+                             class="btn btn-danger btn-sm"
+                             href="/agent/reject-buyer-bid/<%=bid.userId._id%>/<%=bid.bidOnProperty%>"
+                             >Reject</a
+                           >
+                         </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="details-<%= bid.bidOnProperty %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <div class="text-center pt-2">
+                                       <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="/images/StandingCount.png" alt="">
+                                    </div>
+                                    <div class="text-center pt-2">
+                                       <h3>Waqar would like to Bid for your busniess at 2.3%</h3>
+                                    </div>
+                                    <div class="text-center pt-2">
+                                       <h3 style="color: yellow;">9807</h3>
+                                    </div>
+                                 </div>
+                                 <div class="modal-footer">
+                                    <input class="btn btn-primary" type="submit" value="Accept">
+                                    <input class="btn btn-primary" type="submit" value="Waiting">
+                                    <input class="btn btn-danger" type="reset" value="Reject">
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+             </div>
+
+         <% }) %>
+         <% }else{ %>
+            <div class="alert alert-info" role="alert">
+               No accepted bids. Please wait and check later
+             </div>
+
+         <% } %>
+      </div>
+    </div>
+
+ </div>
+
+
+
+ <div class="container-fluid">
+
+<!-- property A  -->
+
+
+        <div class="row" id="myDIV">
+
+
+
+
+
+
+        </div>
+
+
+
+<!-- property B -->
+
+
+<div class="row" id="myDIV2" style="display: flex;">
+
+
+
+         <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+               <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                     <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                           Buyer Name
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">Zubair</div>
+                        <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                           Bid Rate
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">1.4%</div>
+                        <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                           Zip Code
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">32465</div>
+                     </div>
+                     <div class="col-auto">
+                        <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                     </div>
+                     <a href="./buyer.php">
+                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="">
+                       Details
+                       </button></a>
+                     <!-- Modal -->
+                     <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                                 </button>
+                              </div>
+                              <div class="modal-body">
+                                 <div class="text-center pt-2">
+                                    <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="/images/StandingCount.png" alt="">
+                                 </div>
+                                 <div class="text-center pt-2">
+                                    <h3>Waqar would like to Bid for your busniess at 2.3%</h3>
+                                 </div>
+                                 <div class="text-center pt-2">
+                                    <h3 style="color: yellow;">9807</h3>
+                                 </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <input class="btn btn-primary" type="submit" value="Accept">
+                                 <input class="btn btn-primary" type="submit" value="Waiting">
+                                 <input class="btn btn-danger" type="reset" value="Reject">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+          </div>
+
+
+
+
+
+
+<!-- container-fluid end  -->
+     </div>
+
+
+
+ </div>
+ </div>
+ </div>
+</div>
+
+
+
+        <!-- /.container-fluid -->
+
+
+
+
+
+<%- include('../partials/footer') %>
+
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<%- include('../partials/scripts') %>
+<script src="/js/index.js"></script>
+
+
+
+

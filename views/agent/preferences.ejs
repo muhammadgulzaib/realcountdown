@@ -1,0 +1,150 @@
+<%-
+include('../partials/buyer/header')
+%>
+<%- include('../partials/buyer/navbar') %>
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+   <!-- Main Content -->
+   <div id="content">
+
+       <!-- Topbar -->
+        <%- include("../partials/buyer/head") %>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                        <div class="form-group">
+        <h2 class="text-center" style="color: green;">Preferences</h2>
+                                    <p class="pt-3">Radius for how far away they will be notified (i.e. maybe not more than 25 miles awy or whatever they want)?</p>
+                                    <span class="pl-4 " >
+
+                                            <span><input  data-toggle="modal" data-target="#exampleModal" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                 Yes
+
+<!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Radius</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <p>Radius for how far away they will be notified?</p>
+             <div>
+                 <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Radius in miles">
+             </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                                                </label></span>
+
+
+                                           <span class="pl-5"> <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                             No
+                                            </label></span>
+
+                                    </span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/buyer/footer') %>
+
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+<%- include('../partials/buyer/scripts') %>
+
+<style>
+
+
+
+.card_chat {
+    width: 800px;
+    border: none;
+    border-radius: 15px
+}
+
+
+
+.chat {
+    border: none;
+    background: #E2FFE8;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+.bg-white {
+    border: 1px solid #E7E7E9;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #F0F0F0;
+    font-size: 20px
+}
+
+.form-control:focus {
+    box-shadow: none
+}
+
+.form-control::placeholder {
+    font-size: 20px;
+    color: #C4C4C4
+}
+</style>
+
+

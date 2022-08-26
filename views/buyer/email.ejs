@@ -1,0 +1,102 @@
+<%- include('../partials/buyer/header') %> <%-
+include('../partials/buyer/navbar') %>
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <%- include("../partials/buyer/head") %>
+        <!-- Begin Page Content -->
+        <style>
+            .img_size {
+                width: 50px;
+            }
+        </style>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>
+                        <img
+                            src="./img/undraw_profile.svg"
+                            class="img_size"
+                            alt=""
+                        />
+                        Email
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-dark">Dear Muhammad Waqar Arshad,</h5>
+
+                    <p>
+                        We received your request to withdraw funds from
+                        Payoneer. The funds will be deposited in your bank
+                        account today. Withdrawals requested late in the day or
+                        outside business hours typically arrive on the following
+                        business day. (In certain cases, a transaction may take
+                        longer than estimated. If you experience a delay of more
+                        than 5 days, contact us.)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-dark text-center">Withdrawal Details:</h5>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+
+                            <div class="col-md-8">
+                                <table width="100%" border="1px" class="center">
+                                    <tr class="text-center">
+                                        <td class="text-dark">Amount</td>
+                                        <td class="text-dark">
+                                            Refference Number
+                                        </td>
+                                    </tr>
+
+                                    <tr class="text-center">
+                                        <td>$120</td>
+                                        <td>359132485</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 pt-5 text-center">
+                        <button
+                            type="button"
+                            class="btn btn-primary btn-md m-1"
+                        >
+                            Go to Dashboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+    <!-- End of Main Content -->
+
+    <!-- End of Main Content -->
+    <%- include('../partials/buyer/footer') %>
+
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<%- include('../partials/buyer/scripts') %>

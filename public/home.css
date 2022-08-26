@@ -1,0 +1,226 @@
+body {
+    margin: 0%;
+    padding: 0%;
+}
+
+.front_navbar {
+    background-color: silver;
+}
+
+.bg1 {
+    background-color: cornflowerblue;
+}
+
+.fornt-nav {
+    color: white;
+}
+
+.grid {
+    padding: 10px;
+    display: inline-block;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.grid span {
+    color: white;
+}
+
+.dot {
+    text-align: center;
+    height: 18px;
+    width: 17px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+/* navbar  */
+
+.bg2 {
+    background-color: white;
+}
+
+.navbar_img img {
+    position: relative;
+    height: 60px;
+    bottom: 5px;
+}
+
+.nav-item {
+    font-size: 20px;
+    padding: 20px;
+}
+
+.nav-item a:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+.active {
+    color: red;
+}
+
+.link {
+    color: black;
+}
+
+.bg3 {
+    background-color: silver;
+}
+
+.para {
+    display: flex;
+    justify-content: center;
+}
+
+.para p {
+    margin: 15px;
+    font-size: 25px;
+}
+
+.para span {
+    position: relative;
+    top: 20px;
+    font-size: 25px;
+}
+
+.videopara p {
+    position: relative;
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.videopara img {
+    width: 20px;
+    height: 20px;
+}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 0px;
+    border: 1px solid transparent;
+}
+
+.card-grid {
+    padding: 10px;
+    display: inline-block;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.card {
+    margin: auto;
+    display: block;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.qmark {
+    float: right;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    bottom: 10px;
+}
+
+.card button {
+    position: relative;
+    top: 10px;
+    border: 2px solid blue;
+    padding: 5px;
+    width: 100px;
+    border-radius: 30px;
+}
+
+.seller_img {
+    position: relative;
+    top: 24px;
+    width: 250px;
+    height: 260px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid whitesmoke;
+}
+
+.bg4 {
+    background-color: cornflowerblue;
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+
+/* media queries */
+
+@media only screen and (max-width: 1024px) {
+    .card-grid {
+        display: inline-block;
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: 20px;
+    }
+    .card3 {
+        position: relative;
+        left: 50%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .grid {
+        padding: 10px;
+        display: inline-block;
+        display: grid;
+        grid-template-columns: auto auto auto;
+    }
+    .card-grid {
+        display: inline-block;
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+    .card3 {
+        position: relative;
+        left: 0%;
+    }
+}
+
+@media only screen and (max-width: 460px) {
+    .grid {
+        padding: 10px;
+        display: inline-block;
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .grid {
+        padding: 5px;
+        display: inline-block;
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: 10px;
+        font-size: 10px;
+    }
+}
+.modal-dialog {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.modal-body {
+position:relative;
+padding:0px;
+}
+.btn-close {
+position:absolute;
+right:-30px;
+top:0;
+}

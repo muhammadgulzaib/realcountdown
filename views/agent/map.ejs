@@ -1,0 +1,182 @@
+<%- include('../partials/header') %> <%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+        <style>
+        #map {
+          height: 80%;
+          width: 90%;
+          margin-left: 5%;
+        }
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+    </style>
+        <!-- Begin Page Content -->
+
+        <div class="container pb-4">
+          <form action="/agent/map" method="get">
+          <div class="row">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-3">
+                  <div class="input-group rounded">
+        <input type="search" class="form-control rounded" name="nameSearch" placeholder="Search by name" aria-label="Search"
+        aria-describedby="search-addon" />
+      
+        </span>
+      </div>
+                  </div>
+              <div class="col-md-3">
+              <div class="input-group rounded">
+    <input type="search" class="form-control rounded" name="addressSearch" placeholder="Search by address" aria-label="Search"
+    aria-describedby="search-addon" />
+  
+    </span>
+  </div>
+              </div>
+              <div class="col-md-3">
+              <div class="input-group rounded">
+    <input type="search" class="form-control rounded" name="zipSearch" placeholder="Search by zip code" aria-label="Search"
+    aria-describedby="search-addon" />
+  
+    </span>
+  </div>
+              </div>
+              <div class="col-md-1">
+                  <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+          </div>
+          </form>
+      </div>
+
+        <div  id="map"></div>
+    <script>
+      const sellers = `<%-JSON.stringify(sellers)%>`;
+      const buyers = `<%-JSON.stringify(buyers)%>`;
+      const sellerArr = JSON.parse(sellers);
+      const buyerArr = JSON.parse(buyers);
+      function initMap() {
+        const mapOptions = {
+                    center: {lat: 53.430938, lng: -2.960841},
+                    zoom: 17
+                };
+        let mapInst = new google.maps.Map(document.getElementById('map'),mapOptions);
+        let bounds = new google.maps.LatLngBounds();
+        for(const [i,seller] of sellerArr.entries()){
+          if(seller.latitude && seller.longitude){
+            const position = new google.maps.LatLng(seller.latitude, seller.longitude);
+            bounds.extend(position);
+            const icon = {
+                url: "/images/StandingCount.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            };
+            marker = new google.maps.Marker({
+              position: position,
+              map: mapInst,
+              title: seller.name,
+              icon: icon
+            });
+            const infoWindow = new google.maps.InfoWindow();
+            let isCountdownActive = false;
+            if(seller?.properties?.length){
+              seller.properties.find(function(property){
+                if((new Date(property.countdownOverAt).getTime() - new Date().getTime()) > 0){
+                  isCountdownActive = true;
+                }
+              })
+            }
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+              return function () {
+                infoWindow.setContent(
+                  `<div style="text-align:center; cursor: pointer;">
+                    <p>Seller</p>
+                    <p><strong>${seller.name}</strong><p>
+                    ${isCountdownActive ? `<a href="/agent/seller-countdown/${seller._id}" class="btn btn-info btn-sm"> <small>BID NOW</small> </a>`:'<p>No Countdown Active</p>'}
+                    </div>`);
+                infoWindow.open(mapInst, marker);
+              }
+            })(marker, i));
+            mapInst.fitBounds(bounds);
+          }
+        }
+        for(const [i,buyer] of buyerArr.entries()){
+          if(buyer.latitude && buyer.longitude){
+            const position = new google.maps.LatLng(buyer.latitude, buyer.longitude);
+            bounds.extend(position);
+            const icon = {
+                url: "/images/StandingCount.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+                origin: new google.maps.Point(0,0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            };
+            marker = new google.maps.Marker({
+              position: position,
+              map: mapInst,
+              title: buyer.name,
+              icon: icon
+            });
+            const infoWindow = new google.maps.InfoWindow();
+            let isCountdownActive = false;
+            if(buyer?.properties?.length){
+              buyer.properties.find(function(property){
+                if((new Date(property.countdownOverAt).getTime() - new Date().getTime()) > 0){
+                  isCountdownActive = true;
+                }
+              })
+            }
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+              return function () {
+                infoWindow.setContent(
+                  `<div style="text-align:center;">
+                    <p>Buyer</p>
+                    <p><strong>${buyer.name}</strong><p>
+                    ${isCountdownActive ? `<a href="/agent/buyer-countdown/${buyer._id}" class="btn btn-info btn-sm"> <small>BID NOW</small> </a>`:'<p>No Countdown Active</p>'}
+                    </div>`);
+                infoWindow.open(mapInst, marker);
+              }
+            })(marker, i));
+            mapInst.fitBounds(bounds);
+          }
+        }
+
+        var boundsListener = google.maps.event.addListener((mapInst), 'bounds_changed', function (event) {
+          this.setZoom(15);
+          google.maps.event.removeListener(boundsListener);
+        });
+      }
+    </script>
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgfFl9t0sVfKNtZS6GuB9AUDQF_wcTvfA&callback=initMap"></script>
+
+
+
+
+
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/footer') %>
+
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<%- include('../partials/scripts') %>
+
+
+
+
+
+

@@ -1,0 +1,313 @@
+
+<%-
+include('../partials/seller/header')
+%>
+<%- include('../partials/seller/navbar') %>
+
+<style>
+   label {
+     width: 100%;
+ }
+ 
+ .card-input-element {
+     display: none;
+ }
+ 
+ .card-input {
+     margin: 10px;
+     padding: 0px;
+ }
+ 
+ .card-input:hover {
+     cursor: pointer;
+ }
+ 
+ .card-input-element:checked + .card-input {
+      box-shadow: 0 0 1px 1px #332ecc;
+ }
+ </style>
+
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+   <!-- Main Content -->
+   <div id="content">
+
+       <!-- Topbar -->
+        <%- include("../partials/seller/head") %>
+
+
+        <div class="container-fluid " style="background-color: cadetblue;">
+         <form id="filtersearch"action="/seller/country-listing" class=" d-inline"method="post">
+   <div class="row">
+
+     
+      <div class="col-md-3 m-2">
+         <div class="input-group">
+            <input type="text" name="zipcode" class="form-control bg-light border-0 small" placeholder="Search for zip code" aria-label="Search" aria-describedby="basic-addon2" >
+            <div class="input-group-append">
+               <button class="btn btn-primary" type="submit">
+               <i class="fas fa-search fa-sm"></i>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-3 m-2">
+         <div class="input-group">
+            <!-- <input type="text" class="form-control bg-light border-0 small" placeholder="Search for Rating" aria-label="Search" aria-describedby="basic-addon2"> -->
+            <input type="text" name="Name" class="form-control bg-light border-0 small" placeholder="Search for Name" aria-label="Search" aria-describedby="basic-addon2" >
+           
+            <div class="input-group-append">
+               <button class="btn btn-primary" type="submit">
+               <i class="fas fa-search fa-sm"></i>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-3 m-2">
+         <div class="input-group">
+            <input type="text" name="commision" class="form-control bg-light border-0 small" placeholder="Search by Commission Rate" aria-label="Search" aria-describedby="basic-addon2" >
+            <div class="input-group-append">
+               <button class="btn btn-primary" type="submit">
+               <i class="fas fa-search fa-sm"></i>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-2 m-2">
+         <div class="input-group">
+           <div class="input-group-append">
+               <button class="btn btn-primary" type="submit"  onclick="resetForm();">
+               Reset Filter
+               </button>
+            </div>
+         </div>
+     </div>
+</div>
+<script>
+ function resetForm() {
+   document.getElementById("filtersearch").reset();
+}
+</script>
+</form>
+   <style>
+      .agentCard:hover{
+height: 200px;
+      }
+   </style>
+
+<div class="container-fluid">
+   <div class="row pt-2">
+      <% agents.forEach(agent => { %>
+         <div class="col-xl-4 col-md-6 mb-4  <%if(JSON.stringify(hover_id)===JSON.stringify(agent._id)){%>
+            order-first   
+           <%}%>">
+            <div class="card agentCard"
+              <% if(JSON.stringify(hover_id)===JSON.stringify(agent._id)) {%>
+               style="border:2px solid red;"
+              <%}%>
+              >
+               <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                     <div class="col-auto">
+                        <img style="width: 70px; border-radius: 50%; border: 1px solid lightgray;" src="./images/StandingCount.png" alt="">
+                     </div>
+                     <div class="col mr-2 pl-4 ">
+                        
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                          <h6> <%= agent.name %> </h6>
+                          
+                        </div>
+                        <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 Commission: <%= agent.commision %>
+                                 </div>
+                        <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 zipcode: <%=agent.zipCode %>
+                                 </div>
+                        <div class="text-xl pt-2 text-success mb-1">
+                           Address: <%=agent.brokerageAddress %>
+                        </div>
+                
+                     </div>
+                     <div>
+                             <!-- <a href="/seller/invite/<%= agent._id %>/2" class="btn btn-primary btn-sm">Invite</a> -->
+                           <div class="col">
+                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#agent-<%= agent?._id  %>">Invite</button>
+                             <br><br>
+                                 <button type="button" data-toggle="modal" data-target="#agent-profile-<%= agent?._id  %>" class="btn btn-primary btn-sm">View Profile</button>
+                                 <!-- Popup  start -->
+<div class="modal fade" id="agent-profile-<%= agent?._id  %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+
+            <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="">
+               <div class="">
+                  <div class="row no-gutters align-items-center">
+                     <div class="col-auto">
+                        <img style="width: 100px; border-radius: 50%; border: 1px solid lightgray;" src="<%= agent.profilePicture %>" alt="">
+                     </div>
+                     <div class="col mr-2 pl-4 ">
+                        <div class="text-xs font-weight-bold  text-uppercase mb-1">
+                           <h6>    <span class="text-success">Name :</span>          <span class="pl-3"><%= agent.name %></span> </h6>
+                        </div>
+                        <div class="text-xl pt-2 font-weight-bold text-success text-uppercase mb-1">
+                           <h6>    <label for="">Commession Rate :</label>    <span class="pl-3 text-dark"><%= agent.commision %></span>       </h6>
+                        </div>
+                        <div class="text-xl pt-2 font-weight-bold text-success text-uppercase mb-1">
+                           <h6>    <label for="">Address :</label> 
+                              <p class="text-dark pl-5"> <%= agent.brokerageAddress %></p>
+                        </div>
+                        <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                           <label for="">
+                              Reviews :
+                              <p class="text-dark ps-5"> <%= agent.reviewOne %></p>
+                              <p class="text-dark ps-5"> <%= agent.reviewTwo %></p>
+                              <p class="text-dark ps-5"> <%= agent.reviewThree %></p>
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <style>
+            .checked {
+            color: orange;
+            }
+         </style>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary btn-sm d-none" data-toggle="modal" data-target="#agent-<%= agent?._id  %>">Invite</button>
+         </div>
+      </div>
+   </div>
+</div>
+ <!-- Popup  end -->
+</div>
+                    </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div
+         class="modal fade"
+         id="agent-<%= agent?._id  %>"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true"
+         >
+         <div id="hide-image" class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+             <form action="/seller/invite-to-bid/<%= agent?._id %>/2" method="post">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Select property</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+               <div class="modal-body">
+                 <% properitesWithInTimeRange.forEach((property)=>{%>
+                 <div class="row">
+                   <div class="col-12">
+                     <label>
+                       <input type="radio" name="propertyId" value="<%=property.property._id%>" class="card-input-element" />
+             
+                         <div class="card card-default card-input">
+                           <div class="card-body">
+                             <%= property.property.propertyName%>
+                           </div>
+                         </div>
+             
+                     </label>
+                   </div>
+                 </div>
+                 <% }) %>
+               </div>
+               <div class="modal-footer">
+                 <button type="submit" class="btn btn-primary">Submit</button>
+               </div>
+               </form>
+            </div>
+         </div>
+      </div>
+         <% }) %>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+
+    <style>
+                    .button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid rgb(0, 81, 255); /* Green */
+}
+.button1:hover {
+  background-color: rgb(0, 81, 255);
+  color: white;
+}
+                    </style>
+
+                   <!-- <button class="button1"> <span class="pntr">Hover over me!</span> -->
+    <div class="container-fluid">
+   <div class="row">
+      <div class="col-10 col-sm-10 col-md-10 col-xl-10 col-xl-10"></div>
+      <div class="col-2 col-sm-2 col-md-2 col-xl-2 col-xl-2 text-right">
+         <button type="button" class="btn  m-3 btn-lg button1">
+         Next >>
+         </button>
+      </div>
+   </div>
+</div>
+    </div>
+
+<%- include('../partials/seller/footer') %>
+</div>
+<%- include('../partials/seller/scripts') %>
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=&v=weekly&channel=2"
+      async>
+
+    </script>
+
+    <script>
+            // Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  const uluru = { lat: -25.344, lng: 131.036 };
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: uluru,
+  });
+  // The marker, positioned at Uluru
+  const marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+  });
+}
+    </script>
+
+
+

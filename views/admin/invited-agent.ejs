@@ -1,0 +1,349 @@
+<%- include("../partials/admin/header") %>
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include("../partials/admin/navbar") %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include("../partials/admin/top-nav") %>
+        <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div>
+            <h2 class="text-center" style="color: green">
+              Invited Agent Registration Data
+            </h2>
+          </div>
+          <% agent.forEach(element=> {%>
+            <form action="/admin/edit-agent/<%= element._id %>" method="POST">
+            <div
+            class="modal fade"
+            tabindex="-1"
+            id="agent-<%= element._id %>"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Invited Agent Details
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <!-- <div class="form-group">
+                                    <label for="formGroupExampleInput">Example label</label>
+                                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                                  </div> -->
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Full Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Asif"
+                          value="<%= element.name %>"
+                          name="name"
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">Email Address</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="asif@gmail.com"
+                          value="<%= element.email %>"
+                          name="email"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+
+                      <div class="col">
+                        <label for="">Profession Category</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="xyz"
+                          value="<%= element.professionalCategory %>"
+                          name="professionalCategory"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Profession Title</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="xyz"
+                          value="<%= element.professionalTitle %>"
+                          name="professionalTitle"
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">Licinence/Passport/ID</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="2578364837258237"
+                          value="<%= element.license %>"
+                          name="license"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">City</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="RWP"
+                          value="<%= element.city %>"
+                          name="city"
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">Time Zone</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="24"
+                          value="<%= element.timeZone %>"
+                          name="timeZone"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput"
+                        >Brokrage Address</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="formGroupExampleInput"
+                        placeholder="Street 34 G10/4 Dhoke Miskeen"
+                        value="<%= element.brokerageAddress %>"
+                        name="brokerageAddress"
+                      />
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Service Area</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="XYZ"
+                          value="<%= element.serviceAreas %>"
+                          name="serviceAreas"
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">Primary Phone</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="2578364837"
+                          value="<%= element.primaryPhone %>"
+                          name="primaryPhone"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Brokrage Phone</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="635426"
+                          value="<%= element.brokeragePhone %>"
+                          name="brokeragePhone"
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">State</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="xyz"
+                          value="<%= element.state %>"
+                          name="state"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Date</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="09/07/2023"
+                          value="<%= element.date %>"
+                          name="date"
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">Description</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="fcgvjhnugt6erdcvghv"
+                          value="<%= element.description %>"
+                          name="description"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Screen Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="new item"
+                          value="<%= element.screenName %>"
+                          name="screenName"
+                          />
+                      </div>
+                      <div class="col">
+                        <label for="">Review 1</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="fcgvjhnugt6erdcvghvjkhgfuisdjklhiosd;fkl;joksdfjkshdiujhk"
+                          value="<%= element.reviewOne %>"
+                          name="reviewOne"
+                          />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Review 2</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="new item"
+                          value="<%= element.reviewTwo %>"
+                          name='reviewTwo'
+                        />
+                      </div>
+                      <div class="col">
+                        <label for="">Review 3</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="fcgvjhnugt6erdcvghvjkhgfuisdjklhiosd;fkl;joksdfjkshdiujhk"
+                          value="<%= element.reviewThree %>"
+                          name="reviewThree"
+                          />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Eidt</button>
+                </form>
+                <% if(element.status === 'disapproved'){  %>
+                <form action="/admin/approve-agent/<%= element._id %>" method="POST">
+                  <button type="submit" value="approve" class="btn btn-primary">
+                    Approved
+                  </button>
+                </form>
+                <% }else if(element.status === 'approved'){ %>
+                <form action="/admin/dissapprove-agent/<%= element._id %>" method="POST">
+                  <button type="submit" value="disapprove" class="btn btn-primary">
+                    DisApproved
+                  </button>
+                </form>
+                <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% })  %>
+          <!-- /.container-fluid -->
+          <div class="card-body" id="myDIV">
+            <div class="table-responsive">
+              <input
+                style="float: right"
+                class="btn btn-danger"
+                type="reset"
+                value="Delete All"
+              />
+
+              <table
+                class="table table-bordered pt-2"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr class="text-center">
+
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% agent.forEach(element => { %>
+                  <tr class="">
+
+                    <td class="text-center"><%= element.name %></td>
+                    <td class="text-center"><%= element.email %></td>
+
+                    <td class="text-center">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#agent-<%= element._id %>"
+                        data-whatever="@mdo"
+                      >
+                        Review
+                      </button>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End of Main Content -->
+
+
+               <!-- End of Main Content -->
+               <%- include("../partials/footer") %>
+
+               <!-- Bootstrap core JavaScript-->
+             </body>
+
+             <%- include("../partials/scripts") %>
+           </html>
+
+
+
+<script>
+  function colorChange() {
+    document.getElementById("color").style.color = "white";
+    document.getElementById("color").style.backgroundColor = "red";
+  }
+</script>

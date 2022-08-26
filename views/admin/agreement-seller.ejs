@@ -1,0 +1,355 @@
+<%- include("../partials/admin/header") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include("../partials/admin/navbar") %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include("../partials/admin/top-nav") %>
+        <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+        <!-- Large modal -->
+        <% successfullBids.forEach(bid=>{ %>
+          <div class="modal fade bd-example-modal-lg" id="agreement-<%= bid.bidOnProperty %>"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="" style="color: green;">Referral Agreement</h5>
+
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form action="/admin/send-referral-agreement/<%= bid.agentId._id %>/<%= bid.bidOnProperty %>/<%= bid.userId._id %>/<%= bid._id %>/2" method="POST">
+                      <div class="modal-body">
+                        <div class="text-center pt-2">
+                          <span ><input type="text" name="countdown" disabled="<%= true %>" value="Countdown LLC"> </span>
+                          <span style="float: right;" class="pr-3">(Broker A)</span>
+                          <hr>
+                        </div>
+    
+                        <div>
+                            <span class="pl-2">refers</span>
+                         <span style="justify-content: center; padding-left: 202px;">
+                          <span ><input type="text" name="countdown" disabled="<%= true %>" value="Buyer/Renter"> </span>
+                         </span>
+                          <span style="float: right;" class="pr-3">(Propect)</span>
+                          <hr>
+                        </div>
+    
+                        <div>
+                          <span class="pl-3">to</span>
+                       <span style="justify-content: center; padding-left: 220px;">
+                        <span ><input type="text" name="countdown" disabled="<%= true %>" value="<%= bid.agentId.name %>"> </span>
+                       </span>
+                        <span style="float: right;" class="pr-3">(Broker B)</span>
+                        <hr>
+                        <span class="pl-2">In consideration of the referral of Propect, Broker B shall compensale Broker A in the amount of</span>
+                      </div>
+    
+                      <div>
+                          <h5 class="pl-2 pt-2 font-weight-bold">(Complete one)</h5>
+                      </div>
+                      <% if(!bid.agreement || bid?.agreement?.type === 'amount'){ %>
+                      <div>
+                          <span class="pl-2">
+                              <input class="check" name="<%= 'agreement' %>" type="radio">
+                              <span style="width: 10px;">  <input class="inputtag" name="price" type="text" placeholder="$" value="<%= bid?.agreement?.percentage %>">$</span>
+                          </span>
+                      </div>
+                      <%}%>
+                      <% if(!bid.agreement || bid?.agreement?.type === 'pgp'){ %>
+                      <div class="pt-3">
+                          <span class="pl-2">
+                              <input class="check" name="<%= 'agreement' %>" type="radio">
+                              <span style="width: 10px;">  <input class="inputtag2" name="pgp" type="text" value="<%= bid?.agreement?.percentage %>">%of the gross purchase price of any property purchased. soid, or caticoad by Prospect</span>
+                          </span>
+                      </div>
+                      <%}%>
+                      <% if(!bid.agreement || bid?.agreement?.type === 'pfc'){ %>
+                      <div class="pt-3">
+                          <span class="pl-2">
+                              <input class="check" name="<%= 'agreement' %>" type="radio">
+                              <span style="width: 10px;">  <input class="inputtag2" name="pfc" type="text" placeholder="17" value="<%= bid?.agreement?.percentage %>">%of the full commonission received by Broker B on any real estate transaction involving Prospect</span>
+                          </span>
+                      </div>
+                      <%}%>
+                      <% if(!bid.agreement || bid?.agreement?.type === 'plc'){ %>
+                      <div class="pt-3">
+                          <span class="pl-2">
+                              <input class="check" name="<%= 'agreement' %>" type="radio">
+                              <span style="width: 10px;">  <input class="inputtag2" name="plc" type="text" value="<%= bid?.agreement?.percentage %>">%of the listing commission received by Broker B an any real estate transaction involving Prospect</span>
+                          </span>
+                      </div>
+                      <%}%>
+                      <% if(!bid.agreement || bid?.agreement?.type === 'psc'){ %>
+                      <div class="pt-3">
+                          <span class="pl-2">
+                              <input class="check" name="<%= 'agreement' %>" type="radio">
+                              <span style="width: 10px;">  <input class="inputtag2"  name="psc" type="text" value="<%= bid?.agreement?.percentage %>">%of the selling commission received by Broker B an any real estate transaction involving Prospect</span>
+                          </span>
+                      </div>
+                      <%}%>
+                      <% if(!bid.agreement || bid?.agreement?.type === 'other'){ %>
+                      <div class="pt-3">
+                          <span class="pl-2">
+                              <input class="check" name="<%= 'agreement' %>" type="radio">
+                              <span> Other</span> <input class="inputtag3" name="other" type="text" value="<%= bid?.agreement?.percentage %>">
+                          </span>
+                      </div>
+                      <%}%>
+                      <div class="pt-3 pl-2">
+                          <span>
+                              As a referral fee, in the event that Broker B is compensated in connection with any real estate related contract or
+              transaction involving Prospect.
+                          </span>
+                      </div>
+    
+                      <div class="pt-3">
+                          <span class="pl-2">
+    
+                              <span> Additional Terms:</span> <input class="inputtag4" name="additionalTerms" type="text" value="<%=bid?.agreement?.additionalTerms%>">
+                          </span>
+                      </div>
+    
+                      <div class="pt-3">
+    
+                          <div style="border: 2px solid black; margin: 10px;">
+                              <div class="text-center">
+                                  <span> Broker B must notify Countdown LLC at the time of sale </span>
+                                  <hr>
+                              </div>
+    
+                              <div class="text-center">
+                                  <span> If Countdown LLC learns that this was not done within 30 days of the sale, Broker B acknowledges that Countdown  </span>
+                                  <span>Will receive 50% of the listing commission</span>
+                              </div>
+    
+                          </div>
+    
+                      </div>
+    
+                      <div class="pt-5">
+                          <div class="pl-2">
+                              <span>Broker A: <input class="inputtag5" type="text" name="brokerA" value="<%= bid?.agreement?.brokerA %>"></span>
+                              <span class="pl-3">Date: <input class="inputtag5" name="dateBrokerA" type="date" value="<%= bid?.agreement?.dateBrokerA %>"></span>
+                          </div>
+                      </div>
+    
+                      <div class="pt-5">
+                          <div class="pl-2">
+                              <span>Broker B: <input class="inputtag5" type="text" name="brokerB" value="<%= bid?.agreement?.brokerB %>"></span>
+                              <span class="pl-3">Date: <input class="inputtag5" name="dateBrokerB" type="date" value="<%= bid?.agreement?.dateBrokerB %>"></span>
+                          </div>
+                      </div>
+                      </div>
+
+
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+
+       <% }) %>
+
+<!-- Small modal -->
+
+          <!-- /.container-fluid -->
+          <div class="card-body" id="myDIV">
+            <div class="table-responsive">
+            <h2 style="color: green;">Referral Agreement</h2>
+            <input
+            style="float: right"
+            class="btn btn-danger"
+            type="reset"
+            value="Delete All"
+          />
+              <table
+                class="table table-bordered pt-2"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr class="text-center">
+
+                    <th>Agent Name</th>
+                    <th>Seller Name</th>
+                    <th>Agreement At</th>
+                    <th>Agreement</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  <% successfullBids.forEach(bid => { %>
+                    <%
+
+                    const date = new Date();
+
+                    let ct = new Date(bid.bidOverAt);
+
+                    const dateTime = ct.getTime() - date.getTime()
+                    if(dateTime > 0){
+
+
+                }
+
+                if(dateTime <  0 && bid.status == 'Accepted'){
+                    %>
+
+                    <tr class="">
+
+                      <td class="text-center"><%= bid.agentId.name %></td>
+                      <td class="text-center"><%= bid.userId.name %></td>
+                      <td class="text-center"><%= new Date(bid.bidOverAt).getDate() %>/<%= new Date(bid.bidOverAt).getMonth() %>/<%= new Date(bid.bidOverAt).getFullYear() %> - <%= new Date(bid.bidOverAt).getHours() %>:<%= new Date(bid.bidOverAt).getMinutes() %>:<%= new Date(bid.bidOverAt).getSeconds() %>::<%= new Date(bid.bidOverAt).getMilliseconds() %></td>
+
+                      <td class="text-center">
+                        <button
+                          type="button"
+                          class="btn btn-primary "
+                          data-toggle="modal"
+                          data-target="#agreement-<%= bid.bidOnProperty %>"
+                        >
+                          View
+                        </button>
+                        <%if(bid?.agreement && bid?.agreement?.status != 'Waiting'){%>
+                          <button type="button" data-id="agreement-<%= bid.bidOnProperty %>" class="btn btn-info" onclick="downloadPdf(this)">Download</button>
+                        <% } %>
+
+                      </td>
+                    </tr>
+                  <% } }) %>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End of Main Content -->
+
+              <!-- End of Main Content -->
+              <%- include("../partials/footer") %>
+
+              <!-- Bootstrap core JavaScript-->
+            </body>
+
+            <%- include("../partials/scripts") %>
+          </html>
+
+
+
+<script>
+  function downloadPdf(e) {
+    const id = $(e).attr('data-id');
+    // let doc = new jsPDF('p', 'pt', 'a4');
+    // doc.fromHTML(document.getElementById(id).innerHTML,
+    //   15,
+    //   15,
+    //   {
+    //     'width': 170
+    //   },
+    //   function (a) {
+    //     doc.save("agreement.pdf"); // save file name as HTML2PDF.pdf
+    //   }
+    //   );
+
+    // var divContents = $(`#${id}`).html();
+    //   var printWindow = window.open('', '', 'height=400,width=800');
+    //   printWindow.document.write('<html><head><title>Html to PDF</title>');
+    //   printWindow.document.write('</head><body >');
+    //   printWindow.document.write(divContents);
+    //   printWindow.document.write('</body></html>');
+    //   printWindow.document.close();
+    //   // printWindow.print();
+    //   printWindow.focus(); // necessary for IE >= 10*/
+
+    //   printWindow.print();
+    //   printWindow.close();
+    //   return true;
+
+    var opt = {
+      margin:       1,
+      filename:     'agreement.pdf',
+      image:        { type: 'png', quality: 1 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { format: 'A4', orientation: 'portrait' }
+    };
+    const ele = document.querySelector(`#${id} .modal-body`).innerHTML;
+    html2pdf(ele,opt);
+  }
+</script>
+
+<script>
+  function colorChange() {
+    document.getElementById("color").style.color = "white";
+    document.getElementById("color").style.backgroundColor = "red";
+  }
+</script>
+
+
+<style>
+
+    .inputtag {
+      border-top-style: hidden;
+      border-right-style: hidden;
+      border-left-style: hidden;
+      border-bottom-style: groove;
+
+    }
+
+    .inputtag2{
+        border-top-style: hidden;
+      border-right-style: hidden;
+      border-left-style: hidden;
+      border-bottom-style: groove;
+      width: 40px;
+    }
+
+    .inputtag3{
+        border-top-style: hidden;
+      border-right-style: hidden;
+      border-left-style: hidden;
+      border-bottom-style: groove;
+      width: 440px;
+    }
+    .inputtag4{
+        border-top-style: hidden;
+      border-right-style: hidden;
+      border-left-style: hidden;
+      border-bottom-style: groove;
+      width: 340px;
+    }
+    .inputtag5{
+        border-top-style: hidden;
+      border-right-style: hidden;
+      border-left-style: hidden;
+      border-bottom-style: groove;
+      width: 260px;
+    }
+    .no-outline:focus {
+      outline: none;
+    }
+    .check{
+        position: relative;
+        padding-top: 10px;
+    }
+
+  </style>

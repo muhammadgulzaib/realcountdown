@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>SB Admin 2 - Register</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="/vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+
+  <body class="bg-gradient-primary">
+    <script>
+      toastr.options = {
+     "closeButton": false,
+     "debug": false,
+     "newestOnTop": false,
+     "progressBar": true,
+     "positionClass": "toast-top-center",
+     "preventDuplicates": false,
+     "onclick": null,
+     "showDuration": "300",
+     "hideDuration": "1000",
+     "timeOut": "5000",
+     "extendedTimeOut": "1000",
+     "showEasing": "swing",
+     "hideEasing": "linear",
+     "showMethod": "fadeIn",
+     "hideMethod": "fadeOut"
+   }
+   </script>
+   <% if(error.length > 0){ %>
+      <script>
+        toastr.error('<%=error%>')
+      </script>
+    <% } %>
+   <% if(success.length > 0){ %>
+      <script>
+        toastr.success('<%=success%>')
+      </script>
+    <% } %>
+    <div class="container">
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-5 d-none d-lg-block">
+              <img
+                class="pt-5 rounded mx-auto d-block w-50"
+                src="/images/LeaningCount.png"
+                alt=""
+              />
+            </div>
+            <div class="col-lg-7">
+              <div class="pr-5 pt-3">
+                <span style="float: right">
+                  Step <span>1</span> <span>2</span>
+                  <span style="color: red; text-decoration: underline">3</span>
+                </span>
+              </div>
+
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Agent Registration!</h1>
+                </div>
+                <form
+                  class="user"
+                  action="/agent/register/step3"
+                  id="form"
+                  method="POST"
+                >
+                  <input type="hidden" value="<%= email %>" name="email" />
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <label for="">State*</label>
+                      <input
+                        type="text"
+                        required
+                        class="form-control form-control-user"
+                        name="state"
+                        value="<% if(formData.length > 0 ) {%> <%= formData[0].state %> <% } %>"
+                        placeholder="State"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="">Zip Code*</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        name="zipCode"
+                        value="<% if(formData.length > 0 ) {%> <%= formData[0].zipCode %> <% } %>"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="">Description*</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-user"
+                      name="description"
+                      placeholder="Description"
+                      value="<% if(formData.length > 0 ) {%> <%= formData[0].description %> <% } %>"
+                      required
+                    />
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <label for="">License*</label>
+                      <input
+                        type="tel"
+                        class="form-control form-control-user"
+                        name="license"
+                        placeholder="License"
+                        value="<% if(formData.length > 0 ) {%> <%= formData[0].license %> <% } %>"
+                        required
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="">Service Areas*</label>
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        name="serviceAreas"
+                        placeholder="Service Areas"
+                        value="<% if(formData.length > 0 ) {%> <%= formData[0].serviceAreas %> <% } %>"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <p>
+                      Are you willing to lower your commission below 3% in order
+                      to receive more bites?
+                    </p>
+                    <span class="pl-4">
+                      <span
+                        ><input
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          class="form-check-input"
+                          type="radio"
+                          name="option"
+                          value="Yes"
+                          checked="<% if(formData.length > 0 && formData[0].option === 'Yes' ) {%> true <% } %>"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          Yes
+
+                          <!-- Button trigger modal -->
+
+                          <!-- Modal -->
+                          <div
+                            class="modal fade"
+                            id="exampleModal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Commission</h5>
+                                  <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>
+                                    What is the lowest percent commission you
+                                    would be willing to accept?
+                                  </p>
+                                  <div>
+                                    <input
+                                      type="number"
+                                      min="-1"
+                                      max="3"
+                                      class="form-control"
+                                      name="commision"
+                                      placeholder="commission in %"
+                                      id="focus"
+                                    />
+                                    <small
+                                      class="text-danger"
+                                      id="error"
+                                    ></small>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-dismiss="modal"
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </label></span
+                      >
+
+                      <span class="pl-5">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          id="commisionOpt"
+                          checked
+                          name="option"
+                          checked="<% if(formData.length > 0 && formData[0].option === 'No' ) {%> true <% } %>"
+                          value="No"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          No
+                        </label></span
+                      >
+                    </span>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <a
+                        href="register_1.html"
+                        type="submit"
+                        class="btn btn-warning btn-user btn-block"
+                      >
+                        Back
+                      </a>
+                    </div>
+                    <div class="col-md-6">
+                      <button
+                        class="btn btn-primary btn-user btn-block"
+                        type="submit"
+                      >
+                        Continue
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <div class="text-center pt-3">
+                  <a class="small" href="login.html"
+                    >Already have an account? Login!</a
+                  >
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

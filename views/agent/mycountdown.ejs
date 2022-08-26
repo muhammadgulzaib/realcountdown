@@ -1,0 +1,473 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+         <%- include('../partials/head') %>
+        <!-- End of Topbar -->
+
+
+<div class="container-fluid">
+   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="pills-Seller-tab" data-toggle="pill" href="#pills-Seller" role="tab" aria-controls="pills-Seller" aria-selected="true">Seller</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-Buyer-tab" data-toggle="pill" href="#pills-Buyer" role="tab" aria-controls="pills-Buyer" aria-selected="false">Buyer</a>
+      </li>
+
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-Seller" role="tabpanel" aria-labelledby="pills-Seller-tab">
+         <div class="container-fluid">
+            <div class="row" id="myDIV">
+               <% sellerBids?.forEach(bid => { %>
+
+                  <% if(bid.status == 'Accepted') {%>
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <h2>Accepted</h2>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-4 col-md-6 mb-4">
+
+                  <div class="card border-left-success shadow h-100 py-2">
+                     <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                           <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                 Name
+                              </div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                              <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 Property
+                              </div>
+                              <% bid.userId.properties.forEach(property=>{ %>
+
+                                 <% if(property._id.equals(bid.bidOnProperty)){ %>
+
+                              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= property.propertyName %></div>
+                                 <% } %>
+                              <% }) %>
+                              <!-- <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 Rating
+                              </div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">***</div> -->
+                           </div>
+                           <div class="col-auto">
+                              <img style="width: 150px;" src="./images/Count_BatVersion.png" alt="">
+                           </div>
+                           <!-- Button trigger modal -->
+                           <a href="/agent/chat/<%= bid.userId._id %>/1">
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="">
+                           Chat
+                           </button></a>
+                           <!-- Modal -->
+                           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <div class="text-center pt-2">
+                                          <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="./images/StandingCount.png" alt="">
+                                       </div>
+                                       <div class="text-center pt-2">
+                                          <h3>Waqar would like to Bid for your busniess at 2.3%</h3>
+                                       </div>
+                                       <div class="text-center pt-2">
+                                          <h3 style="color: yellow;">***</h3>
+                                       </div>
+                                    </div>
+
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <% }else if(bid.status == 'Rejected'){ %>
+
+            <div class="container-fluid"></div>
+            <div class="row">
+               <div class="col-md-12">
+                  <h2>Rejected</h2>
+               </div>
+            </div>
+         </div>
+               <div class="col-xl-4 col-md-6 mb-4">
+                  <div class="card border-left-success shadow h-100 py-2">
+                     <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                           <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                 Name
+                              </div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                              <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 Property
+                              </div>
+                              <% bid.userId.properties.forEach(property=>{ %>
+
+                                 <% if(property._id.equals(bid.bidOnProperty)){ %>
+
+                              <div class="h5 mb-0 font-weight-bold text-gray-800 my-2"><%= property.propertyName %></div>
+                                 <% } %>
+                              <% }) %>
+
+                           </div>
+                           <div class="col-auto">
+                              <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                           </div>
+                           <!-- Button trigger modal -->
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rebid-<%= bid.bidOnProperty %>">
+                        Rebid
+         </button>
+         <div  style="padding-left: 270px;" class="modal fade " id="rebid-<%= bid.bidOnProperty %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div id="hide"  class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal-content">
+         <div class="pt-4 text-center">
+               <img style="width: 70px;" src="/images/LeaningCount.png" alt="">
+            </div>
+         <div>
+         <h5 class="p-3" >
+         <div >
+         Please enter Bid commission
+         <form action='/agent/rebid/<%= bid.userId._id %>/<%= bid.agentId._id %>/<%= bid.bidOnProperty %>' method="POST">
+               <input type="text"  class="form-control" id="bit" name="commision" placeholder="Bid Commession" name="number">
+         <br>            <div class="text-right"> <button  type="submit" class="btn btn-primary">
+         Ok
+
+         </button>
+      </div>
+      </form>
+
+         </div>
+         </h5>
+         </div>
+
+         </div>
+         </div>
+         </div>
+                           <!-- Modal -->
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+         <% }else if(bid.status == 'Waiting'){ %>
+
+
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-md-12">
+               <h2>Waiting</h2>
+            </div>
+         </div>
+      </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+               <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                     <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                           <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                              Name
+                           </div>
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                           <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                              Property
+                           </div>
+
+                           <% bid.userId.properties.forEach(property=> { if(property._id.equals(bid.bidOnProperty)){ %>
+
+                           <div class="h5 mb-0 font-weight-bold text-gray-800"><%= property.propertyName %></div>
+                           <% }}) %>
+                        </div>
+                        <div class="col-auto">
+                           <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buyer-<%= bid.bidOnProperty %>">
+                        Details
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="buyer-<%= bid.bidOnProperty %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                 </div>
+                                 <div class="modal-body">
+                                    <div class="text-center pt-2">
+                                       <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="/images/StandingCount.png" alt="">
+                                    </div>
+                                    <div class="text-center pt-2">
+                                       <h3>You Bid On this business at <%= bid.commision %>%</h3>
+                                    </div>
+                                    <div class="text-center pt-2">
+                                       <h3 style="color: yellow;">***</h3>
+                                    </div>
+                                 </div>
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         <% }}) %>
+         </div>
+      </div>
+      <div class="tab-pane fade" id="pills-Buyer" role="tabpanel" aria-labelledby="pills-Buyer-tab">
+
+
+         <% buyerBids.forEach(bid => { %>
+            <% if(bid.status == 'Accepted'){ %>
+
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <h2>Accepted</h2>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-4 col-md-6 mb-4">
+
+                  <div class="card border-left-success shadow h-100 py-2">
+                     <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                           <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                 Name
+                              </div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+                              <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 Property
+                              </div>
+                              <% bid.userId.properties.forEach(property=> { if(property._id.equals(bid.bidOnProperty)){ %>
+
+                                 <div class="h5 mb-0 font-weight-bold text-gray-800"><%= property.propertyName %></div>
+                                 <% }}) %>
+                            <!-- <div class="text-xs pt-2 font-weight-bold text-success text-uppercase mb-1">
+                                 Rating
+                              </div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">***</div> -->
+      </div>
+                           <div class="col-auto">
+                              <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                           </div>
+                           <!-- Button trigger modal -->
+                           <a href="/agent/chat/<%= bid.userId._id %>/2">
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="buyer-<%= bid.bidOnProperty %>">
+                           Chat
+                           </button></a>
+                           <!-- Modal -->
+                           <div class="modal fade" id="buyer-<%= bid.bidOnProperty %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                       <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <div class="text-center pt-2">
+                                          <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="./images/StandingCount.png" alt="">
+                                       </div>
+                                       <div class="text-center pt-2">
+                                          <h3>You Bid on his busniess at <%= bid.commision %>%</h3>
+                                       </div>
+                                       <!-- <div class="text-center pt-2">
+                                          <h3 style="color: yellow;">***</h3>
+                                       </div> -->
+                                    </div>
+
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            <% }else if(bid.status === 'Waiting'){ %>
+
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <h2>Waiting</h2>
+                     </div>
+                  </div>
+               </div>
+                     <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                           <div class="card-body">
+                              <div class="row no-gutters align-items-center">
+                                 <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                       Name
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+
+
+                                 </div>
+                                 <div class="col-auto">
+                                    <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                                 </div>
+                                 <!-- Button trigger modal -->
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail-<%= bid.bidOnProperty %>">
+                                 Details
+                                 </button>
+                                 <!-- Modal -->
+                                <div class="modal fade" id="detail-<%= bid.bidOnProperty %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <h5 class="modal-title" id="exampleModalLongTitle">Agents Details</h5>
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                             <span aria-hidden="true">&times;</span>
+                                             </button>
+                                          </div>
+                                          <div class="modal-body">
+                                             <div class="text-center pt-2">
+                                                <img style="width: 100px; height: 100px; background-color: rgb(216, 226, 226); border-radius: 50%; " src="/images/StandingCount.png" alt="">
+                                             </div>
+                                             <div class="text-center pt-2">
+                                                <h3>You Bid on this busniess at <%= bid.commision %>%</h3>
+                                             </div>
+                                             <div class="text-center pt-2">
+                                                <h3 style="color: yellow;">***</h3>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+            <% }else if(bid.status == 'Rejected'){ %>
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <h2>Rejected</h2>
+                     </div>
+                  </div>
+               </div>
+                     <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                           <div class="card-body">
+                              <div class="row no-gutters align-items-center">
+                                 <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                       Name
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= bid.userId.name %></div>
+
+
+                                 </div>
+                                 <div class="col-auto">
+                                    <img style="width: 150px;" src="/images/Count_BatVersion.png" alt="">
+                                 </div>
+                                 <!-- Button trigger modal -->
+                                 <button href="/agent/main" class="btn btn-primary" data-toggle="modal" data-target="#detail-<%= bid.bidOnProperty %>">
+                                 Rebid
+                                 </button>
+                                 <!-- Modal -->
+
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+            <% } %>
+         <% }) %>
+
+
+
+   </div>
+ </div>
+
+
+
+
+
+<!-- property B -->
+
+
+
+
+ </div>
+ </div>
+ </div>
+</div>
+
+
+
+        <!-- /.container-fluid -->
+
+
+
+
+    <!-- End of Main Content -->
+   </div>
+    <%- include('../partials/footer') %>
+
+    <!-- End of Content Wrapper -->
+
+
+    <!-- End of Page Wrapper -->
+
+    <%- include('../partials/scripts') %>
+
+<script>
+    // document.getElementById("myDIV").style.display="none";
+
+    function myFunction() {
+        document.getElementById("myDIV2").style.display="none";
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+
+    document.getElementById("myDIV2").style.display="none";
+
+    function myFunction2() {
+        document.getElementById("myDIV").style.display="none";
+        var x = document.getElementById("myDIV2");
+        if (x.style.display === "none") {
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+
+
+
+</script>
+
+
+
+

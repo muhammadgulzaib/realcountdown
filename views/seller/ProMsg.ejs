@@ -1,0 +1,325 @@
+<%-
+include('../partials/seller/header')
+%>
+<%- include('../partials/seller/navbar') %>
+
+
+
+
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+   <!-- Main Content -->
+   <div id="content">
+
+       <!-- Topbar -->
+        <%- include("../partials/seller/head") %>
+<div>
+  <h3 class="text-center" style="color: green;">You will get $1 for every Agent who contacts you. Agents will not receive your contact details, but you may receive theirs. You can turn this feature off at any time</h3>
+    <h3 class="text-center pt-3" style="color: green;">Do you want to recieve Promotion Message
+      <form action="/seller/toggle-messages" method="POST">
+
+          <button type="submit" name="btn" value="no" class="btn btn-outline-primary">No</button>
+
+
+
+                  <button type="submit" name="btn" value="yes" name="btn" value="yes"class="btn btn-primary">Yes</button>
+
+
+      </form>
+</label>
+</h3></div>
+
+<div class="card-body">
+                            <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <tr class="">
+
+<td class="text-center">Total Amount Credit</td>
+<td class="text-center"><%=promotionalBalance%>$</td>
+
+<td class="text-center">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+ Claim
+</button>
+
+
+</td>
+                            </tr></table>
+                            </div></div>
+
+                            <div class="container-fluid ">
+   <div class="row">
+
+         <div class="input-group pl-5 d-flex justify-content-end pr-4">
+           <!-- <label for="">From
+            <input type="date" class="form-control border-0 small" placeholder="Search...." aria-label="Search" aria-describedby="basic-addon2"></label>&nbsp;&nbsp;&nbsp;
+            <label for="">To
+            <input type="date" class="form-control border-0 small" placeholder="Search...." aria-label="Search" aria-describedby="basic-addon2"></label>&nbsp;&nbsp;&nbsp;
+            <label for="">Search by name <input type="text" class="form-control border-0 small" placeholder="Search...." aria-label="Search" aria-describedby="basic-addon2"></label> -->
+            <span class="pl-5 pt-4">
+              <a
+              href="/seller/delete-promotional-messages"
+                class="btn btn-danger"
+              >Delete All</a></span>
+            <div class="input-group-append">
+               </button>
+         </div>
+      </div>
+<div class="card-body" id="myDIV">
+            <div class="table-responsive">
+
+
+              <table
+                class="table table-bordered pt-2"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+
+
+                <tbody>
+                  <tr>
+                  <td class="text-center"><input type="checkbox" /></td>
+                    <th  class="text-center">Name</th>
+                    <th class="text-center">Message</th>
+<th class="text-center">Action</th>
+                  </tr>
+                  <% promotionalMessages?.promotionalMessages?.forEach(msg => { %>
+
+                  <tr class="">
+                    <td class="text-center"><input type="checkbox" /></td>
+                    <td class="text-center"><%= msg?.agentId?.name %></td>
+                    <td class="text-center">  <p class="card-text text-dark">
+                      <%= msg.message %>
+                    </td>
+                    <td class="text-center">
+                    <button id="demo" class="btn btn-primary" type="button"    data-toggle="modal"  data-target="#message-<%= msg._id %>" class="textcolor">View</button>
+                    <a href="/seller/details-one-message/<%= msg._id %>" ></a>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+
+   </div></div>
+
+
+
+
+
+
+  <div  style="padding-left: 270px;" class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div id="hide"  class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="pt-4 text-center">
+            <img style="width: 70px;" src="/images/LeaningCount.png" alt="">
+        </div>
+   <div>
+   <h5 class="p-3" >
+<div>
+  <form action="/seller/account-details" method="POST">
+    <label for=""> Enter Account Number</label>
+        <input type="text" name="accountNumber" class="form-control" id="bit" placeholder="Account Number" >
+    </div>
+    <label for="">Enter Amount</label>
+                <input type="text" class="form-control" id="bit" placeholder=" Enter Amount " name="amount">
+    </div>
+        <br>            <div class="text-right pb-3 pr-4"> <button type="button" class="btn btn-secondary" data-dismiss="modal">
+    Close
+    </button>
+    <button  type="submit" class="btn btn-primary">
+    Send
+    </button>
+    </form>
+</div>
+       </div>
+</h5>
+   </div>
+
+    </div>
+  </div>
+</div>
+
+
+<% promotionalMessages?.promotionalMessages?.forEach(msg => {  %>
+ <div  style="padding-left: 270px;" class="modal fade " id="message-<%= msg._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+  <div id="hide"  class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+   <div>
+   <h5 class="p-3" >
+       <div >
+Message
+<textarea rows="10" cols="40" name="comment" form="usrform" readonly><%= msg.message %></textarea>
+    <br>            <div class="text-right"> <button onclick="myFunction(document.getElementById('bit').value)" type="button" class="btn btn-secondary" data-dismiss="modal">
+Close
+</button>
+
+</div>
+    </div>
+       </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include('../partials/seller/footer') %>
+  </div>
+  <% }) %>
+  <%- include('../partials/seller/scripts') %>
+
+
+<style>
+  .textcolor{
+    color: cornflowerblue;
+
+  }
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.card_chat {
+    width: 800px;
+    border: none;
+    border-radius: 15px
+}
+
+
+
+.chat {
+    border: none;
+    background: #E2FFE8;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+.bg-white {
+    border: 1px solid #E7E7E9;
+    font-size: 20px;
+    border-radius: 20px
+}
+
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #F0F0F0;
+    font-size: 20px
+}
+
+.form-control:focus {
+    box-shadow: none
+}
+
+.form-control::placeholder {
+    font-size: 20px;
+    color: #C4C4C4
+}
+</style>
+<script>
+function colorchange() {
+  document.getElementById("demo").style.color = "red";
+}
+function colorchange1() {
+  document.getElementById("demo1").style.color = "red";
+}
+function colorchange2() {
+  document.getElementById("demo2").style.color = "red";
+}
+function colorchange3() {
+  document.getElementById("demo3").style.color = "red";
+}
+function colorchange4() {
+  document.getElementById("demo4").style.color = "red";
+}
+function colorchange5() {
+  document.getElementById("demo5").style.color = "red";
+}
+function colorchange6() {
+  document.getElementById("demo6").style.color = "red";
+}
+function colorchange7() {
+  document.getElementById("demo7").style.color = "red";
+}
+function colorchange8() {
+  document.getElementById("demo8").style.color = "red";
+}
+function colorchange9() {
+  document.getElementById("demo9").style.color = "red";
+}
+function colorchange10() {
+  document.getElementById("demo10").style.color = "red";
+}
+function colorchange11() {
+  document.getElementById("demo11").style.color = "red";
+}
+</script>
+
